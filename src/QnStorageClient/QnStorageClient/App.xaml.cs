@@ -7,6 +7,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -56,7 +58,7 @@ namespace QnStorageClient
                 }
 
                 // 将框架放在当前窗口中
-                Window.Current.Content = rootFrame;
+                Window.Current.Content = rootFrame;              
             }
 
             if (e.PrelaunchActivated == false)

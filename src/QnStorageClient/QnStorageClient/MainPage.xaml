@@ -6,8 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Background="AliceBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            
+            <Border>
+                <TextBlock 
+                    Margin="10 0 0 0"
+                    FontSize="24" 
+                    Text="Qiniu Storage" 
+                    VerticalAlignment="Center"/>
+            </Border>
+            
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Style="{ThemeResource TextBlockButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                        <TextBlock Margin="10 0 0 0" Text="新建"/>
+                    </StackPanel>
+                </Button>
 
+                <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                        <TextBlock Margin="10 0 0 0" Text="刷新"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <ListView Grid.Row="2" Grid.Column="0"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
+                        <TextBlock Margin="10 0 0 0" Text="设置"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Frame Grid.Column="1" Name="ContentFrame"/>
     </Grid>
 </Page>
