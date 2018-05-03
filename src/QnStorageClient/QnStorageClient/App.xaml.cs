@@ -58,7 +58,12 @@ namespace QnStorageClient
                 }
 
                 // 将框架放在当前窗口中
-                Window.Current.Content = rootFrame;              
+                Window.Current.Content = rootFrame;
+
+                // 设置标题栏背景色
+                ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             }
 
             if (e.PrelaunchActivated == false)

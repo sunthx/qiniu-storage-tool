@@ -7,51 +7,82 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Background="AliceBlue">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            
-            <Border>
-                <TextBlock 
-                    Margin="10 0 0 0"
-                    FontSize="24" 
-                    Text="Qiniu Storage" 
-                    VerticalAlignment="Center"/>
-            </Border>
-            
-            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button Style="{ThemeResource TextBlockButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
-                        <TextBlock Margin="10 0 0 0" Text="新建"/>
-                    </StackPanel>
-                </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
 
-                <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
-                        <TextBlock Margin="10 0 0 0" Text="刷新"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <ListView Grid.Row="2" Grid.Column="0"/>
-            <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
-                        <TextBlock Margin="10 0 0 0" Text="设置"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+        <Grid Grid.Row="0" Height="{x:Bind CoreTitleBarHeight, Mode=OneWay}" RequestedTheme="Dark"
+              Background="{ThemeResource TitleAcrylicBrush}">
+            <Rectangle x:Name="TitleBarBackgroundElement" Fill="Transparent" />
+            <Grid Padding="{x:Bind CoreTitleBarPadding, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" x:Uid="TxtTitle" Text="#TxtTitle" Margin="10,5"
+                           HorizontalAlignment="Stretch" FontSize="13" />
+            </Grid>
         </Grid>
-        <Frame Grid.Column="1" Name="ContentFrame"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}" Padding="10 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{ThemeResource TextBlockButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                            <TextBlock x:Uid="CreateButton" Margin="10 0 0 0" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                            <TextBlock x:Uid="RefreshButton" Margin="10 0 0 0" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    VerticalAlignment="Center"
+                    x:Uid="BucketListTitle" 
+                    Grid.Row="1" 
+                    Margin="5 0 0 0"/>
+
+                <ListView
+                    IsItemClickEnabled="True"
+                    ItemClick="BucketListItemClick"
+                    ItemsSource="{x:Bind Buckets}"
+                    Grid.Row="2"
+                    Grid.Column="0" />
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
+                            <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Frame Grid.Column="1" Name="ContentFrame" Padding="0"/>
+        </Grid>
+        
+        <Grid Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+            
+        </Grid>
     </Grid>
 </Page>

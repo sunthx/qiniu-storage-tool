@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using QnStorageClient.Annotations;
 
-namespace QnStorageClient.Views
+namespace QnStorageClient.ViewModels
 {
     public class SettingPageViewModel : INotifyPropertyChanged
     {

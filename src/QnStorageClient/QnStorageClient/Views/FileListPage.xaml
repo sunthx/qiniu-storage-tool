@@ -5,9 +5,97 @@
     xmlns:local="using:QnStorageClient.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:QnStorageClient.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <GridView/>
+    <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+       <Grid.RowDefinitions>
+           <RowDefinition Height="50"/>
+           <RowDefinition Height="50"/>
+           <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <Button Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                    <TextBlock x:Uid="UploadFileButton" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+
+            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                    <TextBlock x:Uid="RefreshFilesButton" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+
+            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                    <TextBlock x:Uid="DeleteFileButton" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+
+            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;" />
+                    <TextBlock x:Uid="DownloadFileButton" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock 
+                x:Uid="FileListTitle"
+                VerticalAlignment="Center"
+                Style="{ThemeResource TitleTextBlockStyle}"/>
+
+            <Border Margin="10 0 0 0" Background="Brown" CornerRadius="5" Padding="5" Height="30">
+                <TextBlock 
+                    FontSize="12"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding BucketName}"/>
+            </Border>
+
+            <Border Margin="10 0 0 0" Background="CadetBlue" CornerRadius="5" Padding="5" Height="30">
+                <TextBlock 
+                    FontSize="12"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding ZoneName}"/>
+            </Border>
+        </StackPanel>
+
+        <GridView
+            SelectionMode="Extended"
+            ItemsSource="{Binding Files}" 
+            Grid.Row="2">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:FileObject">
+                    <Grid Width="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="1" Background="Azure" Grid.Row="0">
+                            <TextBlock 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Text="{x:Bind MimeType}"/>
+                        </Border>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            TextWrapping="Wrap"
+                            Grid.Row="1" 
+                            Text="{x:Bind FileName}"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>
