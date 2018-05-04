@@ -50,6 +50,8 @@ namespace QnStorageClient
             Window.Current.SizeChanged += OnWindowSizeChanged;
             UpdateLayoutMetrics();
 
+            QiniuService.Initialize("", "");
+
             var queryResult = await QiniuService.GetBuckets();
             queryResult.ForEach(Buckets.Add);
         }

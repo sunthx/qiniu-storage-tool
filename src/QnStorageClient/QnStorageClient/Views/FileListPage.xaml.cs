@@ -66,7 +66,8 @@ namespace QnStorageClient.Views
                 var fileObject = new FileObject
                 {
                     FileName = file.Key,
-                    MimeType = file.MimeType
+                    MimeType = file.MimeType,
+                    FileSize = file.Fsize
                 };        
 
                 Files.Add(fileObject);
