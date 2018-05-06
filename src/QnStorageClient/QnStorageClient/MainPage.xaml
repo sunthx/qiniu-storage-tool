@@ -40,14 +40,14 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{ThemeResource TextBlockButtonStyle}">
+                    <Button Command="{Binding BucketListViewModel.AddBucketCommand}" Style="{ThemeResource TextBlockButtonStyle}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
                             <TextBlock x:Uid="CreateButton" Margin="10 0 0 0" />
                         </StackPanel>
                     </Button>
 
-                    <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                    <Button Command="{Binding BucketListViewModel.RefreshBucketListCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
                             <TextBlock x:Uid="RefreshButton" Margin="10 0 0 0" />
@@ -65,12 +65,14 @@
                 <ListView
                     IsItemClickEnabled="True"
                     ItemClick="BucketListItemClick"
-                    ItemsSource="{x:Bind Buckets}"
+                    DisplayMemberPath="Name"
+                    SelectedValue="{Binding BucketListViewModel.CurrentSelectedBucketObject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding BucketListViewModel.Buckets}"
                     Grid.Row="2"
                     Grid.Column="0" />
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
+                    <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
                             <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />

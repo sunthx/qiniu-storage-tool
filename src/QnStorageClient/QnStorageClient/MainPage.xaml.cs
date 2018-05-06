@@ -10,7 +10,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using QnStorageClient.Annotations;
+using QnStorageClient.Models;
 using QnStorageClient.Services;
+using QnStorageClient.ViewModels;
 
 namespace QnStorageClient
 {
@@ -44,8 +46,10 @@ namespace QnStorageClient
 
         private void BucketListItemClick(object sender, ItemClickEventArgs e)
         {
-            var bucketName = e.ClickedItem.ToString();
-            ContentFrame.Navigate(typeof(FileListPage), bucketName);
+            if (e.ClickedItem is BucketObject currentBucket)
+            {
+                NavigationService.NaviageTo("files", currentBucket.Name);
+            }
         }
 
 
@@ -93,15 +97,25 @@ namespace QnStorageClient
             _coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleBarBackgroundElement);
 
+            //main page datacontext
+            var dataContext = new MainPageViewModel();
+            DataContext = dataContext;
+            
+            //NaviagtionService Initialize
+            NavigationService.MainFrame = ContentFrame;
+            NavigationService.RegisterPageType("setting",typeof(SettingPage));
+            NavigationService.RegisterPageType("files",typeof(FileListPage));
+
             //load data
             var setting = AppSettingService.GetSetting();
             if (string.IsNullOrEmpty(setting.Ak) || string.IsNullOrEmpty(setting.Sk))
             {
-                ContentFrame.Navigate(typeof(SettingPage));
+                NavigationService.NaviageTo("setting");
             }
             else
             {
                 QiniuService.Initialize(setting.Ak,setting.Sk);
+                await dataContext.BucketListViewModel.Initialize();
             }
         }
 

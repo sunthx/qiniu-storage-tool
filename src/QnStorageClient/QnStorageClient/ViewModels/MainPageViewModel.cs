@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using QnStorageClient.Services;
 
 namespace QnStorageClient.ViewModels
 {
@@ -20,7 +21,7 @@ namespace QnStorageClient.ViewModels
         public RelayCommand SettingCommand { get; set; }
         private void SettingCommandExecute()
         {
-
+            NavigationService.NaviageTo("setting");
         }
     }
 }
