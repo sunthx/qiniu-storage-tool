@@ -137,6 +137,26 @@
     <value>文件列表</value>
     <comment>文件列表的标题</comment>
   </data>
+  <data name="LvHeaderFileName.Text" xml:space="preserve">
+    <value>文件名</value>
+    <comment>文件列表标题：文件名</comment>
+  </data>
+  <data name="LvHeaderFilePutTime.Text" xml:space="preserve">
+    <value>更新时间</value>
+    <comment>文件列表标题：更新时间</comment>
+  </data>
+  <data name="LvHeaderFileSize.Text" xml:space="preserve">
+    <value>文件大小</value>
+    <comment>文件列表标题：文件大小</comment>
+  </data>
+  <data name="LvHeaderFileType.Text" xml:space="preserve">
+    <value>存储类型</value>
+    <comment>文件列表标题：存储类型</comment>
+  </data>
+  <data name="LvHeaderMimeType.Text" xml:space="preserve">
+    <value>MimeType</value>
+    <comment>文件列表标题：MimeType</comment>
+  </data>
   <data name="RefreshButton.Text" xml:space="preserve">
     <value>刷新</value>
     <comment>刷新按钮文本</comment>

@@ -70,32 +70,71 @@
             </Border>
         </StackPanel>
 
-        <GridView
-            SelectionMode="Extended"
-            ItemsSource="{Binding Files}" 
+        <ListView 
+            ItemsSource="{Binding Files}"
             Grid.Row="2">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:FileObject">
-                    <Grid Width="100">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                        <Border BorderThickness="1" Background="Azure" Grid.Row="0">
-                            <TextBlock 
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Text="{x:Bind MimeType}"/>
-                        </Border>
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            TextWrapping="Wrap"
-                            Grid.Row="1" 
-                            Text="{x:Bind FileName}"/>
+            <ListView.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid BorderThickness="0 0 0 1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" x:Uid="LvHeaderFileName" />
+                        <TextBlock Grid.Column="1" x:Uid="LvHeaderMimeType" />
+                        <TextBlock Grid.Column="2" x:Uid="LvHeaderFileSize" />
+                        <TextBlock Grid.Column="3" x:Uid="LvHeaderFileType" />
+                        <TextBlock Grid.Column="4" x:Uid="LvHeaderFilePutTime" />
                     </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:FileObject">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Text="{x:Bind FileName}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{x:Bind MimeType}"/>
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="{x:Bind FileSize}"/>
+                        <TextBlock
+                            Grid.Column="3"
+                            Text="{x:Bind FileType}"/>
+                        <TextBlock
+                            Grid.Column="4"
+                            Text="{x:Bind PutTime}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <ListViewItemPresenter ContentMargin="0" Padding="0" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Page>
