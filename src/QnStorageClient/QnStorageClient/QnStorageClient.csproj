@@ -98,10 +98,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AppSetting.cs" />
+    <Compile Include="Models\BucketObject.cs" />
     <Compile Include="Models\FileObject.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppSettingService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\QiniuService.cs" />
+    <Compile Include="ViewModels\BucketListViewModel.cs" />
     <Compile Include="ViewModels\FileListPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\FileListPage.xaml.cs">
@@ -160,9 +165,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
     </PackageReference>
-    <PackageReference Include="sqlite-net-pcl">
-      <Version>1.4.118</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Share\Qiniu.Share.csproj">
@@ -172,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\FileIcons\" />
-    <Folder Include="Storage\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

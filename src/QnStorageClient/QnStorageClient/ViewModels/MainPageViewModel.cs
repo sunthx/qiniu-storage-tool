@@ -10,10 +10,17 @@ namespace QnStorageClient.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        public MainPageViewModel()
+        {
+            BucketListViewModel = new BucketListViewModel();
+            SettingCommand = new RelayCommand(SettingCommandExecute);
+        }
+
+        public BucketListViewModel BucketListViewModel { get; set; }
         public RelayCommand SettingCommand { get; set; }
+        private void SettingCommandExecute()
+        {
 
-        public RelayCommand AddBucketCommand { get; set; }
-
-        public RelayCommand RefreshBucketListCommnad { get; set; }
+        }
     }
 }

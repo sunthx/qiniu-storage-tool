@@ -25,25 +25,35 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="账号设置"/>
+            <TextBlock 
+                x:Uid="AccountSetting" 
+                Style="{ThemeResource TitleTextBlockStyle}"/>
             <TextBlock 
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center" 
                 Grid.Column="0" 
                 FontSize="16"
-                Text="AK:"/>
+                x:Uid="Ak"/>
 
             <TextBlock 
+                x:Uid="Sk"
                 Grid.Row="2" 
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center" 
                 Grid.Column="0" 
-                FontSize="16"
-                Text="SK:"/>
+                FontSize="16"/>
 
-            <TextBox Grid.Column="1" Grid.Row="1"/>
-            <TextBox Grid.Column="1" Grid.Row="2"/>
+            <TextBox Text="{Binding Ak,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+            <TextBox Text="{Binding Sk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+
+            <Button
+                Command="{Binding UpdateAccountCommand}"
+                Grid.Column="1" 
+                Grid.Row="3" 
+                HorizontalAlignment="Right"
+                Width="100" 
+                x:Uid="UpdateButton"/>
         </Grid>
 
         <Grid Grid.Row="1" RowSpacing="10">
@@ -54,17 +64,29 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="110"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="下载设置"/>
             <TextBlock 
+                x:Uid="DownloadSetting"
+                Style="{ThemeResource TitleTextBlockStyle}"/>
+            <TextBlock 
+                x:Uid="StoragePath"
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center" 
                 Grid.Column="0" 
-                FontSize="16"
-                Text="存储路径:"/>
-
-            <TextBox Grid.Column="1" Grid.Row="1"/>
+                FontSize="16"/>
+            <TextBox 
+                Text="{Binding StoragePath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                Grid.Column="1" 
+                Grid.Row="1"/>
+            <Button 
+                HorizontalAlignment="Right"
+                Width="100" 
+                Grid.Column="2" 
+                Grid.Row="1" 
+                Command="{Binding SelectStoragePathCommand}"
+                x:Uid="SelectPathButton"/>
         </Grid>
     </Grid>
 </Page>

@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountSetting.Text" xml:space="preserve">
+    <value>账号设置</value>
+    <comment>设置界面.账户管理</comment>
+  </data>
+  <data name="Ak.Text" xml:space="preserve">
+    <value>AK:</value>
+    <comment>设置界面.账户管理.Ak</comment>
+  </data>
   <data name="BucketListTitle.Text" xml:space="preserve">
     <value>存储空间列表</value>
     <comment>显示所有的Bucket</comment>
@@ -132,6 +140,10 @@
   <data name="DownloadFileButton.Text" xml:space="preserve">
     <value>下载</value>
     <comment>下载文件按钮</comment>
+  </data>
+  <data name="DownloadSetting.Text" xml:space="preserve">
+    <value>下载设置</value>
+    <comment>设置界面.下载设置</comment>
   </data>
   <data name="FileListTitle.Text" xml:space="preserve">
     <value>文件列表</value>
@@ -165,13 +177,29 @@
     <value>刷新</value>
     <comment>刷新文件列表</comment>
   </data>
+  <data name="SelectPathButton.Content" xml:space="preserve">
+    <value>选择</value>
+    <comment>设置界面.下载设置.选择存储路径按钮</comment>
+  </data>
   <data name="SettingButton.Text" xml:space="preserve">
     <value>设置</value>
     <comment>设置按钮文本</comment>
   </data>
+  <data name="Sk.Text" xml:space="preserve">
+    <value>SK:</value>
+    <comment>设置界面.账户管理.Sk</comment>
+  </data>
+  <data name="StoragePath.Text" xml:space="preserve">
+    <value>存储路径:</value>
+    <comment>设置界面.下载设置.存储路径</comment>
+  </data>
   <data name="TxtTitle.Text" xml:space="preserve">
     <value>QnStudio</value>
     <comment>标题</comment>
+  </data>
+  <data name="UpdateButton.Content" xml:space="preserve">
+    <value>更新</value>
+    <comment>设置界面.账户管理.更新按钮</comment>
   </data>
   <data name="UploadFileButton.Text" xml:space="preserve">
     <value>上传新文件</value>

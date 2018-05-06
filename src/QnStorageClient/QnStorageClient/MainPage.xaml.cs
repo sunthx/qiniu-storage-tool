@@ -1,38 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using QnStorageClient.Views;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media.Animation;
-using Qiniu.Share.Storage;
-using Qiniu.Share.Util;
 using QnStorageClient.Annotations;
 using QnStorageClient.Services;
 
-// https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
-
 namespace QnStorageClient
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class MainPage : INotifyPropertyChanged
     {
         public MainPage()
@@ -44,14 +25,11 @@ namespace QnStorageClient
 
         public ObservableCollection<string> Buckets { get; set; }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             _coreTitleBar.LayoutMetricsChanged += OnLayoutMetricsChanged;
             Window.Current.SizeChanged += OnWindowSizeChanged;
             UpdateLayoutMetrics();
-
-            var queryResult = await QiniuService.GetBuckets();
-            queryResult.ForEach(Buckets.Add);
         }
 
         private void SettingButtonClick(object sender, RoutedEventArgs e)
@@ -109,11 +87,22 @@ namespace QnStorageClient
 
         #endregion
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleBarBackgroundElement);
+
+            //load data
+            var setting = AppSettingService.GetSetting();
+            if (string.IsNullOrEmpty(setting.Ak) || string.IsNullOrEmpty(setting.Sk))
+            {
+                ContentFrame.Navigate(typeof(SettingPage));
+            }
+            else
+            {
+                QiniuService.Initialize(setting.Ak,setting.Sk);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

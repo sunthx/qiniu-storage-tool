@@ -1,31 +1,70 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using QnStorageClient.Annotations;
+﻿using System;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using QnStorageClient.Services;
 
 namespace QnStorageClient.ViewModels
 {
-    public class SettingPageViewModel : INotifyPropertyChanged
+    public class SettingPageViewModel : ViewModelBase
     {
         private string _ak;
         public string Ak
         {
             get => _ak;
-            set { _ak = value; OnPropertyChanged(); }
+            set => Set(ref _ak, value);
         }
 
         private string _sk;
         public string Sk
         {
             get => _sk;
-            set { _sk = value; OnPropertyChanged(); }
+            set => Set(ref _sk, value);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private string _storagePath;
+        public string StoragePath
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _storagePath;
+            set => Set(ref _storagePath, value);
+        }
+
+        public RelayCommand UpdateAccountCommand { get; set; }
+
+        public RelayCommand SelectStoragePathCommand { get; set; }
+
+        public SettingPageViewModel()
+        {
+            UpdateAccountCommand = new RelayCommand(UpdateAccountCommandExecute);
+            SelectStoragePathCommand = new RelayCommand(async ()=> await SelectStoragePathCommandExecute());
+        }
+
+        private void UpdateAccountCommandExecute()
+        {
+            var setting = AppSettingService.GetSetting();
+            setting.Ak = Ak;
+            setting.Sk = Sk;
+
+            AppSettingService.SaveSetting(setting);
+        }
+
+        private async Task SelectStoragePathCommandExecute()
+        {
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker
+            {
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop
+            };
+            folderPicker.FileTypeFilter.Add("*");
+
+            var folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
+            {
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("StoragePath", folder);
+                StoragePath = folder.Path;
+                var setting = AppSettingService.GetSetting();
+                setting.StoragePath = StoragePath;
+                AppSettingService.SaveSetting(setting);
+            }
         }
     }
 }
