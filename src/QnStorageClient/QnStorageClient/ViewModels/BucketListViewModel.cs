@@ -24,7 +24,7 @@ namespace QnStorageClient.ViewModels
         {
             get => _currentSelectedBucketObject;
             set => Set(ref _currentSelectedBucketObject, value);
-        }
+        }                           
 
         public BucketListViewModel()
         {
@@ -40,7 +40,7 @@ namespace QnStorageClient.ViewModels
 
         private void AddBucketCommandExecute()
         {
-
+              NavigationService.NaviageTo("create");
         }
 
         private async Task RefreshBucketListCommandExecute()

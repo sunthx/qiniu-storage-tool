@@ -107,8 +107,13 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\QiniuService.cs" />
     <Compile Include="ViewModels\BucketListViewModel.cs" />
+    <Compile Include="ViewModels\CreateBucketPageViewModel.cs" />
+    <Compile Include="ViewModels\FileItemViewModel.cs" />
     <Compile Include="ViewModels\FileListPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\CreateBucketPage.xaml.cs">
+      <DependentUpon>CreateBucketPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FileListPage.xaml.cs">
       <DependentUpon>FileListPage.xaml</DependentUpon>
     </Compile>
@@ -142,6 +147,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateBucketPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileListPage.xaml">
       <SubType>Designer</SubType>

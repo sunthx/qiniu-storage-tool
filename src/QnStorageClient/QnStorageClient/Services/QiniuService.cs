@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Qiniu.Share.Storage;
 using Qiniu.Share.Util;
+using QnStorageClient.Models;
 
 namespace QnStorageClient.Services
 {
@@ -45,6 +46,20 @@ namespace QnStorageClient.Services
             var bucketManager = new BucketManager(_currentMac, _config);
             var queryResult = await Task.Factory.StartNew(() => bucketManager.ListFiles(bucketName, prefix, marker, limit, delimiter));
             return queryResult.Result;
+        }
+
+        public static async Task<bool> CreateBucket(BucketObject bucketObject)
+        {
+            var bucketManager = new BucketManager(_currentMac, _config);
+            var queryResult = await Task.Factory.StartNew(() => bucketManager.Create(bucketObject.Name, bucketObject.Region));
+            return queryResult.Code == 200;
+        }
+
+        public static async Task<bool> SetBucketAccessControl(string bucketName,bool isPrivate)
+        {
+            var bucketManager = new BucketManager(_currentMac, _config);
+            var queryResult = await Task.Factory.StartNew(() => bucketManager.SetAccessControl(bucketName, isPrivate));
+            return queryResult.Code == 200;
         }
     }
 }

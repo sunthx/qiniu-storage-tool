@@ -125,9 +125,43 @@
     <value>AK:</value>
     <comment>设置界面.账户管理.Ak</comment>
   </data>
+  <data name="as0.Content" xml:space="preserve">
+    <value>东南亚</value>
+    <comment>创建存储空间选择区域</comment>
+  </data>
+  <data name="BucketAccessInfo.Text" xml:space="preserve">
+    <value>公开和私有仅对 Bucket 的读文件生效，修改、删除、写入等对 Bucket 的操作均需要拥有者的授权才能进行操作。</value>
+    <comment>访问控制说明</comment>
+  </data>
+  <data name="BucketAccessType.Text" xml:space="preserve">
+    <value>访问控制：</value>
+    <comment>访问控制</comment>
+  </data>
   <data name="BucketListTitle.Text" xml:space="preserve">
     <value>存储空间列表</value>
     <comment>显示所有的Bucket</comment>
+  </data>
+  <data name="BucketName.Text" xml:space="preserve">
+    <value>存储空间名称：</value>
+    <comment>存储空间的名称</comment>
+  </data>
+  <data name="BucketNameCondition.Text" xml:space="preserve">
+    <value>存储空间名称作为唯一的 Bucket 识别符，遇到冲突请更换名称。名称由 4 ~ 63 个字符组成 ，可包含 字母、数字、中划线。</value>
+    <comment>BucketName的限制条件</comment>
+  </data>
+  <data name="BucketZone.Text" xml:space="preserve">
+    <value>存储区域：</value>
+    <comment>存储区域</comment>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ConfirmButton.Content" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="CreateBucketTitle.Text" xml:space="preserve">
+    <value>创建存储空间</value>
+    <comment>创建存储空间</comment>
   </data>
   <data name="CreateButton.Text" xml:space="preserve">
     <value>新建</value>
@@ -169,6 +203,18 @@
     <value>MimeType</value>
     <comment>文件列表标题：MimeType</comment>
   </data>
+  <data name="na0.Content" xml:space="preserve">
+    <value>北美</value>
+    <comment>创建存储空间选择区域</comment>
+  </data>
+  <data name="private.Content" xml:space="preserve">
+    <value>私有</value>
+    <comment>创建存储空间访问类型</comment>
+  </data>
+  <data name="public.Content" xml:space="preserve">
+    <value>公开</value>
+    <comment>创建存储空间访问类型</comment>
+  </data>
   <data name="RefreshButton.Text" xml:space="preserve">
     <value>刷新</value>
     <comment>刷新按钮文本</comment>
@@ -204,5 +250,17 @@
   <data name="UploadFileButton.Text" xml:space="preserve">
     <value>上传新文件</value>
     <comment>文件上传按钮</comment>
+  </data>
+  <data name="z0.Content" xml:space="preserve">
+    <value>华东</value>
+    <comment>创建存储空间选择区域</comment>
+  </data>
+  <data name="z1.Content" xml:space="preserve">
+    <value>华北</value>
+    <comment>创建存储空间选择区域</comment>
+  </data>
+  <data name="z2.Content" xml:space="preserve">
+    <value>华南</value>
+    <comment>创建存储空间选择区域</comment>
   </data>
 </root>

@@ -20,6 +20,9 @@ namespace QnStorageClient.Services
             get => _mainFrame ?? Window.Current.Content as Frame;
         }
 
+        public static bool CanGoBack { get;  } = MainFrame.CanGoBack;
+        public static void GoBack() => MainFrame.GoBack();
+
         public static void RegisterPageType(string pageKey, Type pageType)
         {
             lock (PageTypes)

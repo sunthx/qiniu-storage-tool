@@ -105,6 +105,7 @@ namespace QnStorageClient
             NavigationService.MainFrame = ContentFrame;
             NavigationService.RegisterPageType("setting",typeof(SettingPage));
             NavigationService.RegisterPageType("files",typeof(FileListPage));
+            NavigationService.RegisterPageType("create", typeof(CreateBucketPage));
 
             //load data
             var setting = AppSettingService.GetSetting();
