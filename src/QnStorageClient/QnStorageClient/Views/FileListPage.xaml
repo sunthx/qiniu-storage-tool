@@ -6,8 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:QnStorageClient.Models"
+    xmlns:converters="using:QnStorageClient.Converters"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
        <Grid.RowDefinitions>
            <RowDefinition Height="50"/>
@@ -51,19 +54,27 @@
                 VerticalAlignment="Center"
                 Style="{ThemeResource TitleTextBlockStyle}"/>
 
-            <Border Margin="10 0 0 0" Background="Brown" CornerRadius="5" Padding="5" Height="30">
+            <Border 
+                MinWidth="60"
+                Margin="10 0 0 0" 
+                Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
+                Padding="5" 
+                Height="30">
                 <TextBlock 
                     FontSize="12"
-                    Foreground="White"
+                    Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{Binding BucketName}"/>
             </Border>
 
-            <Border Margin="10 0 0 0" Background="CadetBlue" CornerRadius="5" Padding="5" Height="30">
+            <Border 
+                MinWidth="60"
+                Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                Visibility="{Binding ZoneName,Converter={StaticResource EmptyToVisibilityConverter}}"  Margin="10 0 0 0" Padding="5" Height="30">
                 <TextBlock 
                     FontSize="12"
-                    Foreground="White"
+                    Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{Binding ZoneName}"/>
