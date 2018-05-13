@@ -36,20 +36,7 @@ namespace QnStorageClient
 
         private void SettingButtonClick(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame.Content is SettingPage)
-            {
-                return;
-            }
-
-            ContentFrame.Navigate(typeof(SettingPage));
-        }
-
-        private void BucketListItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (e.ClickedItem is BucketObject currentBucket)
-            {
-                NavigationService.NaviageTo("files", currentBucket.Name);
-            }
+            NavigationService.NaviageTo("setting");
         }
 
 
@@ -96,6 +83,9 @@ namespace QnStorageClient
             base.OnNavigatedTo(e);
             _coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleBarBackgroundElement);
+
+            //notification
+            NotificationService.Initialize(AppNotification);
 
             //main page datacontext
             var dataContext = new MainPageViewModel();

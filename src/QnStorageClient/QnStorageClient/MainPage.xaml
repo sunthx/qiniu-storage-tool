@@ -2,15 +2,15 @@
     x:Class="QnStorageClient.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:QnStorageClient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Height="{x:Bind CoreTitleBarHeight, Mode=OneWay}" RequestedTheme="Dark"
@@ -27,64 +27,71 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}" Padding="10 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition />
-                    <RowDefinition Height="50" />
-                </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}" Padding="10 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Command="{Binding BucketListViewModel.AddBucketCommand}" Style="{ThemeResource TextBlockButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
-                            <TextBlock x:Uid="CreateButton" Margin="10 0 0 0" />
-                        </StackPanel>
-                    </Button>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Command="{Binding BucketListViewModel.AddBucketCommand}"
+                                Style="{ThemeResource TextBlockButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                                <TextBlock x:Uid="CreateButton" Margin="10 0 0 0" />
+                            </StackPanel>
+                        </Button>
 
-                    <Button Command="{Binding BucketListViewModel.RefreshBucketListCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
-                            <TextBlock x:Uid="RefreshButton" Margin="10 0 0 0" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+                        <Button Command="{Binding BucketListViewModel.RefreshBucketListCommand}" Margin="10 0 0 0"
+                                Style="{ThemeResource TextBlockButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                                <TextBlock x:Uid="RefreshButton" Margin="10 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
 
-                <TextBlock
-                    Style="{ThemeResource TitleTextBlockStyle}"
-                    VerticalAlignment="Center"
-                    x:Uid="BucketListTitle" 
-                    Grid.Row="1" 
-                    Margin="5 0 0 0"/>
+                    <TextBlock
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        VerticalAlignment="Center"
+                        x:Uid="BucketListTitle"
+                        Grid.Row="1"
+                        Margin="5 0 0 0" />
 
-                <ListView
-                    IsItemClickEnabled="True"
-                    ItemClick="BucketListItemClick"
-                    DisplayMemberPath="Name"
-                    SelectedValue="{Binding BucketListViewModel.CurrentSelectedBucketObject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                    ItemsSource="{Binding BucketListViewModel.Buckets}"
-                    Grid.Row="2"
-                    Grid.Column="0" />
+                    <ListView
+                        IsItemClickEnabled="True"
+                        DisplayMemberPath="Name"
+                        SelectedValue="{Binding BucketListViewModel.CurrentSelectedBucketObject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding BucketListViewModel.Buckets}"
+                        Grid.Row="2"
+                        Grid.Column="0" />
 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}" Click="SettingButtonClick">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
-                            <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}"
+                                Click="SettingButtonClick">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
+                                <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <Frame Grid.Column="1" Name="ContentFrame" Padding="0" />
             </Grid>
-            <Frame Grid.Column="1" Name="ContentFrame" Padding="0"/>
+
+            <controls:InAppNotification
+                x:Name="AppNotification"
+                ShowDismissButton="false" />
         </Grid>
-        
-        <Grid Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-            
-        </Grid>
+
+        <Grid Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}" />
     </Grid>
+
 </Page>

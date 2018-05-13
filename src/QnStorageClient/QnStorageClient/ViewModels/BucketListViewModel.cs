@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -23,19 +20,33 @@ namespace QnStorageClient.ViewModels
         public BucketObject CurrentSelectedBucketObject
         {
             get => _currentSelectedBucketObject;
-            set => Set(ref _currentSelectedBucketObject, value);
+            set
+            {
+                Set(ref _currentSelectedBucketObject, value);
+                if (_currentSelectedBucketObject != null)
+                {
+                    NavigationService.NaviageTo("files", _currentSelectedBucketObject.Name);
+                }
+            }
         }                           
 
-        public BucketListViewModel()
+    public BucketListViewModel()
         {
             Buckets = new ObservableCollection<BucketObject>();
             AddBucketCommand = new RelayCommand(AddBucketCommandExecute);
-            RefreshBucketListCommand = new RelayCommand(async()=> await RefreshBucketListCommandExecute());
+            RefreshBucketListCommand = new RelayCommand(async () =>
+            {
+                NotificationService.ShowMessage("Loading");
+                await RefreshBucketListCommandExecute();
+                NotificationService.Dismiss();
+            });
         }
 
         public async Task Initialize()
         {
+            NotificationService.ShowMessage("Loading");
             await RefreshBucketListCommandExecute();
+            NotificationService.Dismiss();
         }
 
         private void AddBucketCommandExecute()
@@ -60,6 +71,8 @@ namespace QnStorageClient.ViewModels
             {
                 Buckets.Add(new BucketObject { Name = item });
             });
+
+            CurrentSelectedBucketObject = Buckets.First();
         }
     }
 }

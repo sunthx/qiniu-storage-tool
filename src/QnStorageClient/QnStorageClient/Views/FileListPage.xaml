@@ -7,9 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:QnStorageClient.Models"
     xmlns:converters="using:QnStorageClient.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <converters:FileMetaDataConverter x:Key="FileMetaDataConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
     <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
        <Grid.RowDefinitions>
@@ -81,57 +87,96 @@
             </Border>
         </StackPanel>
 
-        <ListView 
+        <ListView
+            extensions:ScrollViewerEx.VerticalScrollBarMargin="0 40 0 0"
             ItemsSource="{Binding Files}"
             Grid.Row="2">
-            <ListView.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </ListView.Resources>
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid BorderThickness="0 0 0 1">
+            <ListView.Header>
+                <controls:ScrollHeader Mode="Sticky">
+                    <Grid RequestedTheme="Dark" Height="40" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Column="0" x:Uid="LvHeaderFileName" />
-                        <TextBlock Grid.Column="1" x:Uid="LvHeaderMimeType" />
-                        <TextBlock Grid.Column="2" x:Uid="LvHeaderFileSize" />
-                        <TextBlock Grid.Column="3" x:Uid="LvHeaderFileType" />
-                        <TextBlock Grid.Column="4" x:Uid="LvHeaderFilePutTime" />
+                        
+                        <TextBlock Grid.Column="1" x:Uid="LvHeaderFileName" />
+                        <TextBlock Grid.Column="2" x:Uid="LvHeaderMimeType" />
+                        <TextBlock Grid.Column="3" x:Uid="LvHeaderFileSize" />
+                        <TextBlock Grid.Column="4" x:Uid="LvHeaderFileType" />
+                        <TextBlock Grid.Column="5" x:Uid="LvHeaderFilePutTime" />
+                        <TextBlock Grid.Column="6" x:Uid="LvHeaderFileOperate" />
                     </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
+                </controls:ScrollHeader>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:FileObject">
                     <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Text="{x:Bind FileName}"/>
+                        <CheckBox
+                            Grid.Column="0"/>
                         <TextBlock
                             Grid.Column="1"
-                            Text="{x:Bind MimeType}"/>
+                            Text="{x:Bind FileName}"/>
                         <TextBlock
                             Grid.Column="2"
-                            Text="{x:Bind FileSize}"/>
+                            Text="{x:Bind MimeType}"/>
                         <TextBlock
                             Grid.Column="3"
-                            Text="{x:Bind FileType}"/>
+                            Text="{x:Bind FileSize, Converter={StaticResource FileMetaDataConverter},ConverterParameter=size}"/>
                         <TextBlock
                             Grid.Column="4"
-                            Text="{x:Bind PutTime}"/>
+                            Text="{x:Bind FileType, Converter={StaticResource FileMetaDataConverter},ConverterParameter=type}"/>
+                        <TextBlock
+                            Grid.Column="5"
+                            Text="{x:Bind PutTime, Converter={StaticResource FileMetaDataConverter},ConverterParameter=date}"/>
+
+                        <StackPanel  HorizontalAlignment="Center" Grid.Column="6" Orientation="Horizontal">
+                            <Button Style="{ThemeResource TextBlockButtonStyle}"> 
+                                <ToolTipService.ToolTip>
+                                    <TextBlock x:Uid="OperatePreviewButton"/>
+                                </ToolTipService.ToolTip>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7B3;" />
+                            </Button>
+
+                            <Button Margin="5 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <TextBlock x:Uid="OperateAddDownloadList"/>
+                                </ToolTipService.ToolTip>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;" />
+                            </Button>
+
+                            <Button Margin="5 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <TextBlock x:Uid="OperateMoreButton"/>
+                                </ToolTipService.ToolTip>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE10C;" />
+                            </Button>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

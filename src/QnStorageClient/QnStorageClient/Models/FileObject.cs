@@ -11,7 +11,7 @@ namespace QnStorageClient.Models
         public string FileName { get; set; }
         public string MimeType { get; set; }
         public long FileSize { set; get; }
-        public DateTime PutTime { set; get; }
+        public long PutTime { set; get; }
         public int FileType { set; get; }
     }
 

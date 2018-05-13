@@ -263,4 +263,23 @@
     <value>华南</value>
     <comment>创建存储空间选择区域</comment>
   </data>
+  <data name="LvHeaderFileOperate.Text" xml:space="preserve">
+    <value>操作</value>
+    <comment>文件列表标题：操作</comment>
+  </data>
+  <data name="OperateAddDownloadList.Text" xml:space="preserve">
+    <value>加入下载列表</value>
+  </data>
+  <data name="OperateMoreButton.Text" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="OperatePreviewButton.Text" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="HightStorage" xml:space="preserve">
+    <value>普通存储</value>
+  </data>
+  <data name="LowStorage" xml:space="preserve">
+    <value>低频存储</value>
+  </data>
 </root>
