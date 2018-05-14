@@ -25,7 +25,7 @@ namespace QnStorageClient.ViewModels
                 Set(ref _currentSelectedBucketObject, value);
                 if (_currentSelectedBucketObject != null)
                 {
-                    NavigationService.NaviageTo("files", _currentSelectedBucketObject.Name);
+                    NavigationService.NaviageTo("files", _currentSelectedBucketObject);
                 }
             }
         }                           

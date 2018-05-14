@@ -9,6 +9,7 @@
     xmlns:converters="using:QnStorageClient.Converters"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:viewModels="using:QnStorageClient.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
@@ -25,28 +26,28 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-            <Button Style="{ThemeResource TextBlockButtonStyle}">
+            <Button Command="{Binding UploadFileCommand}" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
                     <TextBlock x:Uid="UploadFileButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
 
-            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+            <Button Command="{Binding RefreshFileListCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
                     <TextBlock x:Uid="RefreshFilesButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
 
-            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+            <Button Command="{Binding DeleteFileCommand}"  Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
                     <TextBlock x:Uid="DeleteFileButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
 
-            <Button Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+            <Button Command="{Binding DownloadFileCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;" />
                     <TextBlock x:Uid="DownloadFileButton" Margin="10 0 0 0" />
@@ -54,42 +55,50 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock 
-                x:Uid="FileListTitle"
-                VerticalAlignment="Center"
-                Style="{ThemeResource TitleTextBlockStyle}"/>
-
-            <Border 
-                MinWidth="60"
-                Margin="10 0 0 0" 
-                Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
-                Padding="5" 
-                Height="30">
+        <Grid Grid.Row="1" DataContext="{Binding CurrentBucketInfo,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock 
-                    FontSize="12"
-                    Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                    HorizontalAlignment="Center"
+                    x:Uid="FileListTitle"
                     VerticalAlignment="Center"
-                    Text="{Binding BucketName}"/>
-            </Border>
+                    Style="{ThemeResource TitleTextBlockStyle}"/>
 
-            <Border 
-                MinWidth="60"
-                Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                Visibility="{Binding ZoneName,Converter={StaticResource EmptyToVisibilityConverter}}"  Margin="10 0 0 0" Padding="5" Height="30">
-                <TextBlock 
-                    FontSize="12"
-                    Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="{Binding ZoneName}"/>
-            </Border>
-        </StackPanel>
+                <Border 
+                    MinWidth="60"
+                    Margin="10 0 0 0" 
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}" 
+                    Padding="5" 
+                    Height="30">
+                    <TextBlock 
+                        FontSize="12"
+                        Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{Binding Name}"/>
+                </Border>
+
+                <Border 
+                    MinWidth="60"
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                    Visibility="{Binding ZoneName,Converter={StaticResource EmptyToVisibilityConverter}}"  Margin="10 0 0 0" Padding="5" Height="30">
+                    <TextBlock 
+                        FontSize="12"
+                        Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{Binding RegionName}"/>
+                </Border>
+            </StackPanel>
+            <ToggleSwitch x:Uid="BucketType" Grid.Column="2"/>
+        </Grid>
 
         <ListView
             extensions:ScrollViewerEx.VerticalScrollBarMargin="0 40 0 0"
-            ItemsSource="{Binding Files}"
+            ItemsSource="{Binding FileItems,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="2">
             <ListView.Header>
                 <controls:ScrollHeader Mode="Sticky">
@@ -120,7 +129,7 @@
                 </controls:ScrollHeader>
             </ListView.Header>
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:FileObject">
+                <DataTemplate x:DataType="viewModels:FileItemViewModel">
                     <Grid>
                         <Grid.Resources>
                             <Style TargetType="TextBlock">
@@ -138,22 +147,23 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox
+                            IsChecked="{x:Bind IsChecked,Mode=TwoWay}"
                             Grid.Column="0"/>
                         <TextBlock
                             Grid.Column="1"
-                            Text="{x:Bind FileName}"/>
+                            Text="{x:Bind FileObject.FileName}"/>
                         <TextBlock
                             Grid.Column="2"
-                            Text="{x:Bind MimeType}"/>
+                            Text="{x:Bind FileObject.MimeType}"/>
                         <TextBlock
                             Grid.Column="3"
-                            Text="{x:Bind FileSize, Converter={StaticResource FileMetaDataConverter},ConverterParameter=size}"/>
+                            Text="{x:Bind FileObject.FileSize, Converter={StaticResource FileMetaDataConverter},ConverterParameter=size}"/>
                         <TextBlock
                             Grid.Column="4"
-                            Text="{x:Bind FileType, Converter={StaticResource FileMetaDataConverter},ConverterParameter=type}"/>
+                            Text="{x:Bind FileObject.FileType, Converter={StaticResource FileMetaDataConverter},ConverterParameter=type}"/>
                         <TextBlock
                             Grid.Column="5"
-                            Text="{x:Bind PutTime, Converter={StaticResource FileMetaDataConverter},ConverterParameter=date}"/>
+                            Text="{x:Bind FileObject.PutTime, Converter={StaticResource FileMetaDataConverter},ConverterParameter=date}"/>
 
                         <StackPanel  HorizontalAlignment="Center" Grid.Column="6" Orientation="Horizontal">
                             <Button Style="{ThemeResource TextBlockButtonStyle}"> 
@@ -171,6 +181,12 @@
                             </Button>
 
                             <Button Margin="5 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="OperateCopyLink"/>
+                                        <MenuFlyoutItem x:Uid="OperateDelete"/>
+                                    </MenuFlyout>
+                                </Button.Flyout>
                                 <ToolTipService.ToolTip>
                                     <TextBlock x:Uid="OperateMoreButton"/>
                                 </ToolTipService.ToolTip>

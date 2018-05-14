@@ -113,6 +113,7 @@
     <Compile Include="ViewModels\CreateBucketPageViewModel.cs" />
     <Compile Include="ViewModels\FileItemViewModel.cs" />
     <Compile Include="ViewModels\FileListPageViewModel.cs" />
+    <Compile Include="ViewModels\FileListSource.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\CreateBucketPage.xaml.cs">
       <DependentUpon>CreateBucketPage.xaml</DependentUpon>

@@ -282,4 +282,16 @@
   <data name="LowStorage" xml:space="preserve">
     <value>低频存储</value>
   </data>
+  <data name="BucketType.OffContent" xml:space="preserve">
+    <value>私有空间</value>
+  </data>
+  <data name="BucketType.OnContent" xml:space="preserve">
+    <value>公开空间</value>
+  </data>
+  <data name="OperateCopyLink.Text" xml:space="preserve">
+    <value>复制链接</value>
+  </data>
+  <data name="OperateDelete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
 </root>

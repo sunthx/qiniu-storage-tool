@@ -13,9 +13,12 @@ namespace QnStorageClient.Models
             Region = "z0";
             Private = "0";
         }
+
         public string Name { get; set; }
 
         public string Region  { get; set; }
+
+        public string RegionName { get; set; }
 
         public string Private { get; set; }
     }

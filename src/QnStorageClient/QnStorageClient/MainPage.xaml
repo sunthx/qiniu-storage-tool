@@ -10,7 +10,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Height="{x:Bind CoreTitleBarHeight, Mode=OneWay}" RequestedTheme="Dark"
@@ -90,8 +89,6 @@
                 x:Name="AppNotification"
                 ShowDismissButton="false" />
         </Grid>
-
-        <Grid Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}" />
     </Grid>
 
 </Page>
