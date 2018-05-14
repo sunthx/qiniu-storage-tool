@@ -120,6 +120,9 @@
     <Compile Include="Views\FileListPage.xaml.cs">
       <DependentUpon>FileListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FileTransferPage.xaml.cs">
+      <DependentUpon>FileTransferPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileTransferPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
