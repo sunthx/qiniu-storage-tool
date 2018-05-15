@@ -9,6 +9,7 @@ using QnStorageClient.Views;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using QnStorageClient.Annotations;
 using QnStorageClient.Models;
 using QnStorageClient.Services;
@@ -116,6 +117,16 @@ namespace QnStorageClient
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void AppNotification_OnClosed(object sender, InAppNotificationClosedEventArgs e)
+        {
+            LoadingGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void AppNotification_OnOpening(object sender, InAppNotificationOpeningEventArgs e)
+        {
+            LoadingGrid.Visibility = Visibility.Visible;
         }
     }
 }

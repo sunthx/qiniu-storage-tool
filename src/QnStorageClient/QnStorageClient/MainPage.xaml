@@ -85,9 +85,13 @@
                 <Frame Grid.Column="1" Name="ContentFrame" Padding="0" />
             </Grid>
 
-            <controls:InAppNotification
-                Style="{StaticResource CustomInAppNotificationStyle}"
-                x:Name="AppNotification" />
+            <Grid Background="Transparent" x:Name="LoadingGrid">
+                <controls:InAppNotification
+                    Opening="AppNotification_OnOpening"
+                    Closed="AppNotification_OnClosed"
+                    Style="{StaticResource CustomInAppNotificationStyle}"
+                    x:Name="AppNotification" />
+            </Grid>
         </Grid>
     </Grid>
 

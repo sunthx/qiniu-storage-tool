@@ -295,7 +295,7 @@
     <value>删除</value>
   </data>
   <data name="FileDeleted" xml:space="preserve">
-    <value>{0}文件已删除！</value>
+    <value>文件已删除！</value>
   </data>
   <data name="LoadBucketList" xml:space="preserve">
     <value>正在获取存储空间列表...</value>
@@ -305,5 +305,17 @@
   </data>
   <data name="NotificationTitle.Text" xml:space="preserve">
     <value>消息</value>
+  </data>
+  <data name="FileLinkCopied" xml:space="preserve">
+    <value>文件外链地址已复制到剪贴板</value>
+  </data>
+  <data name="PublicLinkTitle.Text" xml:space="preserve">
+    <value>默认外链地址：</value>
+  </data>
+  <data name="FileDeleteFailed" xml:space="preserve">
+    <value>删除文件失败!</value>
+  </data>
+  <data name="FileDeleting" xml:space="preserve">
+    <value>正在删除文件...</value>
   </data>
 </root>

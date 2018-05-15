@@ -8,8 +8,11 @@
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Button Style="{ThemeResource TextBlockButtonStyle}">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" />
+        </Button>
     </Grid>
 </Page>

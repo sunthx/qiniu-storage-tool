@@ -7,6 +7,7 @@ using Microsoft.Toolkit.Uwp;
 using Qiniu.Share.Storage;
 using QnStorageClient.Models;
 using QnStorageClient.Services;
+using QnStorageClient.Utils;
 
 namespace QnStorageClient.ViewModels
 {
@@ -47,10 +48,15 @@ namespace QnStorageClient.ViewModels
 
         public async Task LoadFiles(BucketObject bucketInfo)
         {
+            NotificationService.ShowMessage(ResourceUtils.GetText("LoadFileList"));
+
             CurrentBucketInfo = bucketInfo;
             CurrentBucketInfo.RegionName = await GetZoneName(bucketInfo.Name);
             CurrentBucketInfo.Domains = await QiniuService.Domains(bucketInfo.Name);
+            CurrentBucketInfo.CurrentUsingDomain = CurrentBucketInfo.Domains.FirstOrDefault();
             FileItems = new IncrementalLoadingCollection<FileListSource, FileItemViewModel>(new FileListSource(bucketInfo.Name));
+
+            NotificationService.Dismiss();
         }
 
         private async Task<string> GetZoneName(string bucketName)
@@ -101,21 +107,29 @@ namespace QnStorageClient.ViewModels
 
         private async Task DeleteFileCommandExecute(FileItemViewModel item)
         {
+            NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleting"));
             bool result = await QiniuService.DeleteFile(CurrentBucketInfo.Name, item.FileObject.FileName);
             if (result)
             {
                 FileItems.Remove(item);
+                NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleted"),2000);
+            }
+            else
+            {
+                NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleteFailed"),2000);
             }
         }
 
         private void CopyFileLinkCommandExecute(FileItemViewModel item)
         {
-            string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.Domains.FirstOrDefault(), item.FileObject.FileName);
+            string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
             Clipboard.Clear();
 
             DataPackage dataPackage = new DataPackage();
             dataPackage.SetText(resouceUrl);
             Clipboard.SetContent(dataPackage);
+
+            NotificationService.ShowMessage(ResourceUtils.GetText("FileLinkCopied"),2000);
         }
     }
 }

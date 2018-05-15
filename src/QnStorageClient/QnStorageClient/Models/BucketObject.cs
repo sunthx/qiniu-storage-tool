@@ -45,5 +45,12 @@ namespace QnStorageClient.Models
             get => _domains;
             set => Set(ref _domains, value);
         }
+
+        private string _currentUsingDomain;
+        public string CurrentUsingDomain
+        {
+            get => _currentUsingDomain;
+            set => Set(ref _currentUsingDomain, value);
+        }
     }
 }
