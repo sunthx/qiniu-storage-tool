@@ -24,10 +24,15 @@ namespace QnStorageClient.Services
             return await Task.Factory.StartNew(() => ZoneHelper.QueryZone(_currentMac.AccessKey, bucketName));
         }
 
-        public static async Task<List<string>> GetBuckets()
+        public static async Task<List<string>> GetBuckets(bool isShare = true)
         {
             var bucketManager = new BucketManager(_currentMac, _config);
-            var queryResult = await Task.Factory.StartNew(() => bucketManager.Buckets(true));
+            var queryResult = await Task.Factory.StartNew(() =>
+            {
+                var allBuckets = bucketManager.Buckets(true);
+                return allBuckets;
+            });
+
             if (queryResult?.Result == null)
             {
                 return new List<string>();

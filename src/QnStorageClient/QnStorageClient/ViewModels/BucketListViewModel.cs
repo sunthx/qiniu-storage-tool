@@ -5,18 +5,27 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using QnStorageClient.Models;
 using QnStorageClient.Services;
+using QnStorageClient.Utils;
 
 namespace QnStorageClient.ViewModels
 {
     public class BucketListViewModel : ViewModelBase
     {
+        private BucketObject _currentSelectedBucketObject;
+
+        public BucketListViewModel()
+        {
+            Buckets = new ObservableCollection<BucketObject>();
+            AddBucketCommand = new RelayCommand(AddBucketCommandExecute);
+            RefreshBucketListCommand = new RelayCommand(async () => { await Initialize(); });
+        }
+
         public RelayCommand AddBucketCommand { get; set; }
 
         public RelayCommand RefreshBucketListCommand { get; set; }
 
         public ObservableCollection<BucketObject> Buckets { get; set; }
 
-        private BucketObject _currentSelectedBucketObject;
         public BucketObject CurrentSelectedBucketObject
         {
             get => _currentSelectedBucketObject;
@@ -28,49 +37,30 @@ namespace QnStorageClient.ViewModels
                     NavigationService.NaviageTo("files", _currentSelectedBucketObject);
                 }
             }
-        }                           
-
-    public BucketListViewModel()
-        {
-            Buckets = new ObservableCollection<BucketObject>();
-            AddBucketCommand = new RelayCommand(AddBucketCommandExecute);
-            RefreshBucketListCommand = new RelayCommand(async () =>
-            {
-                NotificationService.ShowMessage("Loading");
-                await RefreshBucketListCommandExecute();
-                NotificationService.Dismiss();
-            });
         }
 
         public async Task Initialize()
         {
-            NotificationService.ShowMessage("Loading");
+            NotificationService.ShowMessage(ResourceUtils.GetText("LoadBucketList"));
             await RefreshBucketListCommandExecute();
             NotificationService.Dismiss();
         }
 
         private void AddBucketCommandExecute()
         {
-              NavigationService.NaviageTo("create");
+            NavigationService.NaviageTo("create");
         }
 
         private async Task RefreshBucketListCommandExecute()
         {
             if (Buckets.Any())
-            {
                 Buckets.Clear();
-            }
 
             var queryResult = await QiniuService.GetBuckets();
             if (!queryResult.Any())
-            {
                 return;
-            }
 
-            queryResult.ForEach(item =>
-            {
-                Buckets.Add(new BucketObject { Name = item });
-            });
+            queryResult.ForEach(item => { Buckets.Add(new BucketObject {Name = item}); });
 
             CurrentSelectedBucketObject = Buckets.First();
         }

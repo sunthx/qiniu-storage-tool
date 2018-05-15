@@ -86,8 +86,8 @@
             </Grid>
 
             <controls:InAppNotification
-                x:Name="AppNotification"
-                ShowDismissButton="false" />
+                Style="{StaticResource CustomInAppNotificationStyle}"
+                x:Name="AppNotification" />
         </Grid>
     </Grid>
 

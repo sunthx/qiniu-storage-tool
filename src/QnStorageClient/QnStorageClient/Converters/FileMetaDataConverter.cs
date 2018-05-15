@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Xaml.Data;
+using QnStorageClient.Utils;
 
 namespace QnStorageClient.Converters
 {
@@ -48,11 +49,8 @@ namespace QnStorageClient.Converters
 
             if (parameter.ToString() == "type")
             {
-                var resourceContext = ResourceContext.GetForViewIndependentUse();
-                var resourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
-
                 int fileType = int.Parse(value.ToString());
-                return fileType == 1 ? resourceMap.GetValue("LowStorage", resourceContext).ValueAsString : resourceMap.GetValue("HightStorage",resourceContext).ValueAsString;
+                return fileType == 1 ? ResourceUtils.GetText("LowStorage"): ResourceUtils.GetText("HightStorage");
             }
 
             return value;

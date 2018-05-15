@@ -294,4 +294,16 @@
   <data name="OperateDelete.Text" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="FileDeleted" xml:space="preserve">
+    <value>{0}文件已删除！</value>
+  </data>
+  <data name="LoadBucketList" xml:space="preserve">
+    <value>正在获取存储空间列表...</value>
+  </data>
+  <data name="LoadFileList" xml:space="preserve">
+    <value>正在获取当前存储空间的文件列表...</value>
+  </data>
+  <data name="NotificationTitle.Text" xml:space="preserve">
+    <value>消息</value>
+  </data>
 </root>
