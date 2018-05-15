@@ -35,12 +35,6 @@ namespace QnStorageClient
             UpdateLayoutMetrics();
         }
 
-        private void SettingButtonClick(object sender, RoutedEventArgs e)
-        {
-            NavigationService.NaviageTo("setting");
-        }
-
-
         #region Title Bar
 
         private readonly CoreApplicationViewTitleBar _coreTitleBar = CoreApplication.GetCurrentView().TitleBar;

@@ -318,4 +318,7 @@
   <data name="FileDeleting" xml:space="preserve">
     <value>正在删除文件...</value>
   </data>
+  <data name="FileTransferManageButton.Text" xml:space="preserve">
+    <value>文件传输</value>
+  </data>
 </root>

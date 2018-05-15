@@ -72,15 +72,25 @@
                         Grid.Row="2"
                         Grid.Column="0" />
 
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}"
-                                Click="SettingButtonClick">
+                    <Grid  Grid.Row="3" ColumnSpacing="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
                                 <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />
                             </StackPanel>
                         </Button>
-                    </StackPanel>
+
+                        <Button Grid.Column="1" Style="{ThemeResource TextBlockButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" />
+                                <TextBlock Margin="10 0 0 0" x:Uid="FileTransferManageButton" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Frame Grid.Column="1" Name="ContentFrame" Padding="0" />
             </Grid>
