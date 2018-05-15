@@ -84,7 +84,7 @@
                 <Border 
                     MinWidth="60"
                     Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                    Visibility="{Binding ZoneName,Converter={StaticResource EmptyToVisibilityConverter}}"  Margin="10 0 0 0" Padding="5" Height="30">
+                    Visibility="{Binding RegionName,Converter={StaticResource EmptyToVisibilityConverter}}"  Margin="10 0 0 0" Padding="5" Height="30">
                     <TextBlock 
                         FontSize="12"
                         Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
@@ -97,6 +97,7 @@
         </Grid>
 
         <ListView
+            x:Name="FileListView"
             extensions:ScrollViewerEx.VerticalScrollBarMargin="0 40 0 0"
             ItemsSource="{Binding FileItems,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="2">
@@ -173,7 +174,11 @@
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7B3;" />
                             </Button>
 
-                            <Button Margin="5 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                            <Button 
+                                Command="{Binding DataContext.DownloadFileCommand,ElementName=FileListView}"
+                                CommandParameter="{Binding}"
+                                Margin="5 0 0 0" 
+                                Style="{ThemeResource TextBlockButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <TextBlock x:Uid="OperateAddDownloadList"/>
                                 </ToolTipService.ToolTip>
@@ -183,8 +188,14 @@
                             <Button Margin="5 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem x:Uid="OperateCopyLink"/>
-                                        <MenuFlyoutItem x:Uid="OperateDelete"/>
+                                        <MenuFlyoutItem 
+                                            x:Uid="OperateCopyLink"
+                                            Command="{Binding DataContext.CopyFileLinkCommand,ElementName=FileListView}"
+                                            CommandParameter="{Binding}"/>
+                                        <MenuFlyoutItem 
+                                            x:Uid="OperateDelete" 
+                                            Command="{Binding DataContext.DeleteFileCommand,ElementName=FileListView}"
+                                            CommandParameter="{Binding}"/>
                                     </MenuFlyout>
                                 </Button.Flyout>
                                 <ToolTipService.ToolTip>

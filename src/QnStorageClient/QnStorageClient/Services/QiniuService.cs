@@ -36,6 +36,13 @@ namespace QnStorageClient.Services
             return queryResult.Result;
         }
 
+        public static async Task<bool> DeleteFile(string bucketName,string fileId)
+        {
+            var bucketManager = new BucketManager(_currentMac, _config);
+            var queryResult = await Task.Factory.StartNew(() => bucketManager.Delete(bucketName, fileId));
+            return queryResult.Code == 200;
+        }
+
         public static async Task<ListInfo> GetFiles(
             string bucketName, 
             string marker = null,
@@ -60,6 +67,28 @@ namespace QnStorageClient.Services
             var bucketManager = new BucketManager(_currentMac, _config);
             var queryResult = await Task.Factory.StartNew(() => bucketManager.SetAccessControl(bucketName, isPrivate));
             return queryResult.Code == 200;
+        }
+
+        public static async Task<List<string>> Domains(string bucketName)
+        {
+            var bucketManager = new BucketManager(_currentMac, _config);
+            var queryResult = await Task.Factory.StartNew(() => bucketManager.Domains(bucketName));
+            if (queryResult.Code == 200)
+            {
+                return queryResult.Result;
+            }
+
+            return new List<string>();
+        }
+
+        public static string CreateResourcePublicUrl(string domians,string resouceId)
+        {
+            return DownloadManager.CreatePublishUrl(domians, resouceId);
+        }
+
+        public static void DownloadFile()
+        {
+
         }
     }
 }

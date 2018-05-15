@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 
 namespace QnStorageClient.Models
 {
-    public class BucketObject
+    public class BucketObject : ViewModelBase
     {
         public BucketObject()
         {
@@ -14,12 +11,39 @@ namespace QnStorageClient.Models
             Private = "0";
         }
 
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => Set(ref _name, value);
+        }
 
-        public string Region  { get; set; }
+        private string _region;
+        public string Region
+        {
+            get => _region;
+            set => Set(ref _region, value);
+        }
 
-        public string RegionName { get; set; }
+        private string _regionName;
+        public string RegionName
+        {
+            get => _regionName;
+            set => Set(ref _regionName, value);
+        }
 
-        public string Private { get; set; }
+        private string _private;
+        public string Private
+        {
+            get => _private;
+            set => Set(ref _private, value);
+        }
+
+        private List<string> _domains;
+        public List<string> Domains
+        {
+            get => _domains;
+            set => Set(ref _domains, value);
+        }
     }
 }

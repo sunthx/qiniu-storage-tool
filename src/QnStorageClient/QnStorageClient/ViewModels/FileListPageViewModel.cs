@@ -1,5 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Toolkit.Uwp;
@@ -14,9 +15,10 @@ namespace QnStorageClient.ViewModels
         public FileListPageViewModel()
         {
             UploadFileCommand = new RelayCommand(UploadFileCommandExecute);
-            RefreshFileListCommand = new RelayCommand(RefreshFileListCommandExecute);
-            DeleteFileCommand = new RelayCommand(DeleteFileCommandExecute);
-            DownloadFileCommand = new RelayCommand(DownloadFileCommandExecute);
+            RefreshFileListCommand = new RelayCommand(async () => await RefreshFileListCommandExecute());
+            DeleteFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DeleteFileCommandExecute(item));
+            DownloadFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DownloadFileCommandExecute(item));
+            CopyFileLinkCommand = new RelayCommand<FileItemViewModel>(CopyFileLinkCommandExecute);
         }
 
         private BucketObject _currentBucketInfo;
@@ -37,14 +39,17 @@ namespace QnStorageClient.ViewModels
 
         public RelayCommand RefreshFileListCommand { get; set; }
 
-        public RelayCommand DeleteFileCommand { get; set; }
+        public RelayCommand<FileItemViewModel> CopyFileLinkCommand { get; set; }
+      
+        public RelayCommand<FileItemViewModel> DeleteFileCommand { get; set; }
 
-        public RelayCommand DownloadFileCommand { get; set; }
+        public RelayCommand<FileItemViewModel> DownloadFileCommand { get; set; }
 
         public async Task LoadFiles(BucketObject bucketInfo)
         {
             CurrentBucketInfo = bucketInfo;
             CurrentBucketInfo.RegionName = await GetZoneName(bucketInfo.Name);
+            CurrentBucketInfo.Domains = await QiniuService.Domains(bucketInfo.Name);
             FileItems = new IncrementalLoadingCollection<FileListSource, FileItemViewModel>(new FileListSource(bucketInfo.Name));
         }
 
@@ -84,16 +89,33 @@ namespace QnStorageClient.ViewModels
         {
         }
 
-        private void RefreshFileListCommandExecute()
+        private Task DownloadFileCommandExecute(FileItemViewModel item)
         {
+            return Task.CompletedTask;
         }
 
-        private void DeleteFileCommandExecute()
+        private async Task RefreshFileListCommandExecute()
         {
+            await LoadFiles(CurrentBucketInfo);
         }
 
-        private void DownloadFileCommandExecute()
+        private async Task DeleteFileCommandExecute(FileItemViewModel item)
         {
+            bool result = await QiniuService.DeleteFile(CurrentBucketInfo.Name, item.FileObject.FileName);
+            if (result)
+            {
+                FileItems.Remove(item);
+            }
+        }
+
+        private void CopyFileLinkCommandExecute(FileItemViewModel item)
+        {
+            string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.Domains.FirstOrDefault(), item.FileObject.FileName);
+            Clipboard.Clear();
+
+            DataPackage dataPackage = new DataPackage();
+            dataPackage.SetText(resouceUrl);
+            Clipboard.SetContent(dataPackage);
         }
     }
 }
