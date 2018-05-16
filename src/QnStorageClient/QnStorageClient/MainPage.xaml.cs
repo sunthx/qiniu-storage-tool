@@ -93,6 +93,9 @@ namespace QnStorageClient
             NavigationService.RegisterPageType("create", typeof(CreateBucketPage));
             NavigationService.RegisterPageType("transfer", typeof(FileTransferPage));
 
+            //Start File Transfer Service
+            FileTransferService.Start();
+
             //load data
             var setting = AppSettingService.GetSetting();
             if (string.IsNullOrEmpty(setting.Ak) || string.IsNullOrEmpty(setting.Sk))

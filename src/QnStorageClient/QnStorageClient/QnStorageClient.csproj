@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Models\AppSetting.cs" />
     <Compile Include="Models\BucketObject.cs" />
+    <Compile Include="Models\ProgressArgs.cs" />
     <Compile Include="Models\FileObject.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,7 +119,7 @@
     <Compile Include="ViewModels\FileListPageViewModel.cs" />
     <Compile Include="ViewModels\FileListSource.cs" />
     <Compile Include="ViewModels\FileTransferPageViewModel.cs" />
-    <Compile Include="ViewModels\FileTransferTask.cs" />
+    <Compile Include="Models\FileTransferTask.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\CreateBucketPage.xaml.cs">
       <DependentUpon>CreateBucketPage.xaml</DependentUpon>

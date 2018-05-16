@@ -45,6 +45,8 @@ namespace QnStorageClient.ViewModels
       
         public RelayCommand<FileItemViewModel> DeleteFileCommand { get; set; }
 
+        public RelayCommand UploadCommand { get; set; }
+
         public RelayCommand<FileItemViewModel> DownloadFileCommand { get; set; }
 
         public async Task LoadFiles(BucketObject bucketInfo)
@@ -99,10 +101,6 @@ namespace QnStorageClient.ViewModels
             return zone;
         }
 
-        private void UploadFileCommandExecute()
-        {
-        }
-
         private void DownloadFileCommandExecute(FileItemViewModel item)
         {
             string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
@@ -110,9 +108,9 @@ namespace QnStorageClient.ViewModels
             Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject,"download"));
         }
 
-        private void UploadFileCommandExecute(FileItemViewModel item)
+        private void UploadFileCommandExecute()
         {
-            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject, "upload"));
+//            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject, "upload"));
         }
 
         private async Task RefreshFileListCommandExecute()

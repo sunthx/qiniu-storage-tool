@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using QnStorageClient.Models;
+using QnStorageClient.Services;
 
 namespace QnStorageClient.ViewModels
 {
@@ -14,21 +16,22 @@ namespace QnStorageClient.ViewModels
     {
         public FileTransferPageViewModel()
         {
-            Messenger.Default.Register<FileTransferTask>(this,AddTaskMessageAction);
+            Messenger.Default.Register<NotificationMessage<FileObject>>(this,AddTaskMessageAction);
             UploadTask = new ObservableCollection<FileTransferTask>();
             DownloadTask = new ObservableCollection<FileTransferTask>();
         }
 
-        private void AddTaskMessageAction(FileTransferTask message)
+        private void AddTaskMessageAction(NotificationMessage<FileObject> message) 
         {
-            if (message.TransferType == TransferType.Download)
+            if (message.Notification == "upload")
             {
-                DownloadTask.Add(message);
+                
             }
             else
             {
-                UploadTask.Add(message);
-            }             
+                var transferTask = FileTransferService.AddDownloadStack(message.Content);
+                DownloadTask.Add(transferTask);
+            }
         }
 
         public ObservableCollection<FileTransferTask> UploadTask { get; set; }

@@ -1,13 +1,26 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
 
-namespace QnStorageClient.ViewModels
+namespace QnStorageClient.Models
 {
     public class FileTransferTask : ViewModelBase
     {
+        public FileTransferTask(FileObject fileObject)
+        {
+            TaskId = Guid.NewGuid().ToString();
+            FileObject = fileObject;
+        }
+
         /// <summary>
         /// 任务编号
         /// </summary>
         public string TaskId { get; set; }
+
+        /// <summary>
+        /// 文件信息
+        /// </summary>
+        public FileObject FileObject { get; set; }
+
         /// <summary>
         /// 传输类型
         /// </summary>

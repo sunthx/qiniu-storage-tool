@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,9 +92,10 @@ namespace QnStorageClient.Services
             return DownloadManager.CreatePublishUrl(domians, resouceId);
         }
 
-        public static void DownloadFile()
+        public static void DownloadFile(FileTransferTask task)
         {
-
+            DownloadManager.Download(task.FileObject.PublicUrl,
+                Path.Combine(AppSettingService.GetSetting().StoragePath, task.FileObject.FileName));
         }
     }
 }
