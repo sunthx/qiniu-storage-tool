@@ -15,13 +15,21 @@ namespace QnStorageClient.ViewModels
         {
             BucketListViewModel = new BucketListViewModel();
             SettingCommand = new RelayCommand(SettingCommandExecute);
+            OpenFileTransferCommand = new RelayCommand(OpenFileTransferCommandExecute);
         }
 
         public BucketListViewModel BucketListViewModel { get; set; }
+
         public RelayCommand SettingCommand { get; set; }
         private void SettingCommandExecute()
         {
             NavigationService.NaviageTo("setting");
+        }
+
+        public RelayCommand OpenFileTransferCommand { get; set; }
+        private void OpenFileTransferCommandExecute()
+        {
+            NavigationService.NaviageTo("transfer");
         }
     }
 }

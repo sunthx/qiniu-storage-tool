@@ -6,11 +6,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <StackPanel>
+            
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock 
+                x:Uid="FileTransferPageTitle"
+                VerticalAlignment="Center"
+                Style="{ThemeResource TitleTextBlockStyle}"/>
+        </StackPanel>
+
+        <Pivot Grid.Row="2">
+            <PivotItem x:Uid="UploadTaskTitle">
+                
+            </PivotItem>
+            <PivotItem x:Uid="DownloadTaskTitle">
+                
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

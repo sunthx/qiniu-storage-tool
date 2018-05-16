@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp;
 using Qiniu.Share.Storage;
 using QnStorageClient.Models;
@@ -18,7 +19,7 @@ namespace QnStorageClient.ViewModels
             UploadFileCommand = new RelayCommand(UploadFileCommandExecute);
             RefreshFileListCommand = new RelayCommand(async () => await RefreshFileListCommandExecute());
             DeleteFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DeleteFileCommandExecute(item));
-            DownloadFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DownloadFileCommandExecute(item));
+            DownloadFileCommand = new RelayCommand<FileItemViewModel>(DownloadFileCommandExecute);
             CopyFileLinkCommand = new RelayCommand<FileItemViewModel>(CopyFileLinkCommandExecute);
         }
 
@@ -48,13 +49,20 @@ namespace QnStorageClient.ViewModels
 
         public async Task LoadFiles(BucketObject bucketInfo)
         {
-            NotificationService.ShowMessage(ResourceUtils.GetText("LoadFileList"));
+            NotificationService.ShowMessage(ResourceUtils.GetText("LoadBucketInfo"));
 
             CurrentBucketInfo = bucketInfo;
             CurrentBucketInfo.RegionName = await GetZoneName(bucketInfo.Name);
             CurrentBucketInfo.Domains = await QiniuService.Domains(bucketInfo.Name);
             CurrentBucketInfo.CurrentUsingDomain = CurrentBucketInfo.Domains.FirstOrDefault();
             FileItems = new IncrementalLoadingCollection<FileListSource, FileItemViewModel>(new FileListSource(bucketInfo.Name));
+
+            FileItems.OnStartLoading += () =>
+            {
+                NotificationService.ShowMessage(ResourceUtils.GetText("LoadFileList"));
+            };
+
+            FileItems.OnEndLoading += NotificationService.Dismiss;
 
             NotificationService.Dismiss();
         }
@@ -95,9 +103,16 @@ namespace QnStorageClient.ViewModels
         {
         }
 
-        private Task DownloadFileCommandExecute(FileItemViewModel item)
+        private void DownloadFileCommandExecute(FileItemViewModel item)
         {
-            return Task.CompletedTask;
+            string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
+            item.FileObject.PublicUrl = resouceUrl;
+            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject,"download"));
+        }
+
+        private void UploadFileCommandExecute(FileItemViewModel item)
+        {
+            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject, "upload"));
         }
 
         private async Task RefreshFileListCommandExecute()

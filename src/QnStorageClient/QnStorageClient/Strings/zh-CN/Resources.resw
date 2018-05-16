@@ -321,4 +321,19 @@
   <data name="FileTransferManageButton.Text" xml:space="preserve">
     <value>文件传输</value>
   </data>
+  <data name="LoadBucketInfo" xml:space="preserve">
+    <value>正在获取当前存储空间信息...</value>
+  </data>
+  <data name="DownloadTaskTitle.Header" xml:space="preserve">
+    <value>下载任务</value>
+    <comment>文件传输界面</comment>
+  </data>
+  <data name="FileTransferPageTitle.Text" xml:space="preserve">
+    <value>文件传输</value>
+    <comment>文件传输界面</comment>
+  </data>
+  <data name="UploadTaskTitle.Header" xml:space="preserve">
+    <value>上传任务</value>
+    <comment>文件传输界面</comment>
+  </data>
 </root>

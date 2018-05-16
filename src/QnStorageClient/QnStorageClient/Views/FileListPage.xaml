@@ -37,29 +37,29 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
             <Button Command="{Binding UploadFileCommand}" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                    <FontIcon Glyph="&#xE948;" />
                     <TextBlock x:Uid="UploadFileButton" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding DownloadFileCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE896;" />
+                    <TextBlock x:Uid="DownloadFileButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding RefreshFileListCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                    <FontIcon Glyph="&#xE117;" />
                     <TextBlock x:Uid="RefreshFilesButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding DeleteFileCommand}"  Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                    <FontIcon Glyph="&#xE74D;" />
                     <TextBlock x:Uid="DeleteFileButton" Margin="10 0 0 0" />
-                </StackPanel>
-            </Button>
-
-            <Button Command="{Binding DownloadFileCommand}" Margin="10 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;" />
-                    <TextBlock x:Uid="DownloadFileButton" Margin="10 0 0 0" />
                 </StackPanel>
             </Button>
         </StackPanel>

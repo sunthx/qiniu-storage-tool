@@ -91,6 +91,7 @@ namespace QnStorageClient
             NavigationService.RegisterPageType("setting",typeof(SettingPage));
             NavigationService.RegisterPageType("files",typeof(FileListPage));
             NavigationService.RegisterPageType("create", typeof(CreateBucketPage));
+            NavigationService.RegisterPageType("transfer", typeof(FileTransferPage));
 
             //load data
             var setting = AppSettingService.GetSetting();

@@ -43,7 +43,7 @@
                         <Button Command="{Binding BucketListViewModel.AddBucketCommand}"
                                 Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE948;" />
+                                <FontIcon Glyph="&#xE948;" />
                                 <TextBlock x:Uid="CreateButton" Margin="10 0 0 0" />
                             </StackPanel>
                         </Button>
@@ -51,7 +51,7 @@
                         <Button Command="{Binding BucketListViewModel.RefreshBucketListCommand}" Margin="10 0 0 0"
                                 Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                                <FontIcon Glyph="&#xE117;" />
                                 <TextBlock x:Uid="RefreshButton" Margin="10 0 0 0" />
                             </StackPanel>
                         </Button>
@@ -79,14 +79,14 @@
                         </Grid.ColumnDefinitions>
                         <Button Command="{Binding SettingCommand}" Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" />
+                                <FontIcon Glyph="&#xE115;" />
                                 <TextBlock Margin="10 0 0 0" x:Uid="SettingButton" />
                             </StackPanel>
                         </Button>
 
-                        <Button Grid.Column="1" Style="{ThemeResource TextBlockButtonStyle}">
+                        <Button Command="{Binding OpenFileTransferCommand}" Grid.Column="1" Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" />
+                                <FontIcon Glyph="&#xE174;" />
                                 <TextBlock Margin="10 0 0 0" x:Uid="FileTransferManageButton" />
                             </StackPanel>
                         </Button>
