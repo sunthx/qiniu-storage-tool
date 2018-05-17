@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage.Pickers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,7 +18,7 @@ namespace QnStorageClient.ViewModels
     {                                      
         public FileListPageViewModel()
         {
-            UploadFileCommand = new RelayCommand(UploadFileCommandExecute);
+            UploadFileCommand = new RelayCommand(async()=> await UploadFileCommandExecute());
             RefreshFileListCommand = new RelayCommand(async () => await RefreshFileListCommandExecute());
             DeleteFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DeleteFileCommandExecute(item));
             DownloadFileCommand = new RelayCommand<FileItemViewModel>(DownloadFileCommandExecute);
@@ -108,9 +110,22 @@ namespace QnStorageClient.ViewModels
             Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject,"download"));
         }
 
-        private void UploadFileCommandExecute()
+        private async Task UploadFileCommandExecute()
         {
-//            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject, "upload"));
+            var fileOpenPicker = new FileOpenPicker();
+            var selectResult = await fileOpenPicker.PickMultipleFilesAsync();
+            if (!selectResult.Any())
+            {
+                return;
+            }
+
+            foreach (var storageFile in selectResult)
+            {
+                var fileObject = new FileObject();
+                fileObject.FileName = storageFile.Name;
+                fileObject.LocalPath = storageFile.Path;
+                Messenger.Default.Send(new NotificationMessage<FileObject>(fileObject, "upload"));
+            }
         }
 
         private async Task RefreshFileListCommandExecute()

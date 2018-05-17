@@ -32,5 +32,9 @@ namespace QnStorageClient.Models
         /// 公开访问链接
         /// </summary>
         public string PublicUrl { set; get; }
+        /// <summary>
+        /// 本地路径
+        /// </summary>
+        public string LocalPath { set; get; }
     }
 }
