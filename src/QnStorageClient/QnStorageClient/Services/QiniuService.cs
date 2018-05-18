@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Qiniu.Share.Http;
 using Qiniu.Share.Storage;
 using Qiniu.Share.Util;
 using QnStorageClient.Models;
@@ -92,10 +94,80 @@ namespace QnStorageClient.Services
             return DownloadManager.CreatePublishUrl(domians, resouceId);
         }
 
-        public static void DownloadFile(FileTransferTask task)
+        public static Task<bool> DownloadFile(FileTransferTask task)
         {
-            DownloadManager.Download(task.FileObject.PublicUrl,
-                Path.Combine(AppSettingService.GetSetting().StoragePath, task.FileObject.FileName));
+            return Task.Factory.StartNew(() =>
+            {
+                var result = DownloadManager.Download(task.FileObject.PublicUrl,
+                    Path.Combine(AppSettingService.GetSetting().StoragePath, task.FileObject.FileName));
+
+                return result.Code == 200;
+            });
+           
+        }
+
+        public static Task<bool> UploadFile(FileTransferTask task)
+        {
+            var resumeDirectory = Path.Combine(ApplicationData.Current.TemporaryFolder.Path,"upload","resume");
+            if (!Directory.Exists(resumeDirectory))
+            {
+                Directory.CreateDirectory(resumeDirectory);
+            }
+
+            var resumeRecordFilePath = Path.Combine(resumeDirectory,task.FileObject.FileName);
+            return Task.Factory.StartNew(() =>
+            {
+                var uploadManager = new UploadManager(_config);
+                void ProgressHandler(long uploadBytes, long totalBytes)
+                {
+                    double percent = uploadBytes * 1.0 / totalBytes;
+                    task.Progress = percent;
+                }
+
+                var putExtra = new PutExtra
+                {
+                    ResumeRecordFile = resumeRecordFilePath,
+                    BlockUploadThreads = 1,
+                    ProgressHandler = ProgressHandler,
+                    UploadController = delegate
+                    {
+                        if (task.TransferState == TransferState.Aborted)
+                        {
+                            return UploadControllerAction.Aborted;
+                        }
+
+                        return task.TransferState == TransferState.Suspended ? 
+                            UploadControllerAction.Suspended:
+                            UploadControllerAction.Activated;
+                    }
+                };
+
+                var putPolicy = new PutPolicy
+                {
+                    Scope = task.BucketObject.Name
+                };
+                putPolicy.SetExpires(24 * 30 * 3600);
+
+                var auth = new Auth(_currentMac);
+                var uptoken = auth.CreateUploadToken(putPolicy.ToJsonString());
+                var uploadResult = uploadManager.UploadFile(
+                    task.FileObject.LocalPath, 
+                    task.FileObject.FileName, 
+                    uptoken, 
+                    putExtra);
+
+                return uploadResult.Code == 200;
+            });
+        }
+
+        public static Task<bool> CheckRemoteDuplicate(string currentBucketName,string fileKey)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var bucketManager = new BucketManager(_currentMac, _config);
+                var statResult = bucketManager.Stat(currentBucketName, fileKey);
+                return !string.IsNullOrEmpty(statResult?.Result.Hash);
+            });
         }
     }
 }

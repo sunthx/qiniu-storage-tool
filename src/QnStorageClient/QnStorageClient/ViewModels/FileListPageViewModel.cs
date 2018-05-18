@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -105,14 +107,22 @@ namespace QnStorageClient.ViewModels
 
         private void DownloadFileCommandExecute(FileItemViewModel item)
         {
-            string resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
+            var resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
             item.FileObject.PublicUrl = resouceUrl;
-            Messenger.Default.Send(new NotificationMessage<FileObject>(item.FileObject,"download"));
+
+            var fileTransferTask = new FileTransferTask(item.FileObject)
+            {
+                TransferType = TransferType.Download
+            };
+
+            FileTransferService.AddTransferTask(fileTransferTask);
         }
 
         private async Task UploadFileCommandExecute()
         {
             var fileOpenPicker = new FileOpenPicker();
+            fileOpenPicker.FileTypeFilter.Add("*");
+
             var selectResult = await fileOpenPicker.PickMultipleFilesAsync();
             if (!selectResult.Any())
             {
@@ -121,10 +131,20 @@ namespace QnStorageClient.ViewModels
 
             foreach (var storageFile in selectResult)
             {
-                var fileObject = new FileObject();
-                fileObject.FileName = storageFile.Name;
-                fileObject.LocalPath = storageFile.Path;
-                Messenger.Default.Send(new NotificationMessage<FileObject>(fileObject, "upload"));
+                var fileObject = new FileObject
+                {
+                    FileName = storageFile.Name,
+                    LocalPath = storageFile.Path
+                };
+
+                var fileTransferTask = new FileTransferTask(fileObject)
+                {
+                    BucketObject = CurrentBucketInfo,
+                    TransferType = TransferType.Upload,
+                    TransferState = TransferState.Idle
+                };
+
+                FileTransferService.AddTransferTask(fileTransferTask);
             }
         }
 

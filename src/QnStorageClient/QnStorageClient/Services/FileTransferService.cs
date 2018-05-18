@@ -24,22 +24,14 @@ namespace QnStorageClient.Services
             }
         }
 
-        /// <summary>
-        ///     添加下载任务
-        /// </summary>
-        /// <returns>返回任务编号</returns>
-        public static FileTransferTask AddDownloadStack(FileObject fileObject)
+        public static FileTransferTask AddTransferTask(FileTransferTask task)
         {
-            var fileTransferTask = new FileTransferTask(fileObject)
-            {
-                TransferType = TransferType.Download
-            };
             lock (LockObject)
             {
-                AllTask.Enqueue(fileTransferTask);
+                AllTask.Enqueue(task);
             }
 
-            return fileTransferTask;
+            return task;
         }
 
         public static void Start()
@@ -58,23 +50,30 @@ namespace QnStorageClient.Services
                         var nextTask = GetNextTask();
                         if (nextTask != null)
                         {
-                            var transferTask = DownloadFile(nextTask);
+                            var transferTask = nextTask.TransferType == TransferType.Download ? 
+                                DownloadFile(nextTask) : 
+                                UploadFile(nextTask);
                             FileTransferTask.Add(nextTask.TaskId, transferTask);
                         }
                     }
                 }
+
                 Thread.Sleep(2000);
             }
         }
 
-        private static Task DownloadFile(FileTransferTask task)
+        private static async Task DownloadFile(FileTransferTask task)
         {
-            return Task.Factory.StartNew(() =>
-            {
-                QiniuService.DownloadFile(task);
-                RemoveTaskById(task.TaskId);
-            });
+            await QiniuService.DownloadFile(task);
+            RemoveTaskById(task.TaskId);
+        }
 
+        private static async Task UploadFile(FileTransferTask task)
+        {
+            if(await QiniuService.UploadFile(task))
+            {
+                RemoveTaskById(task.TaskId);
+            }
         }
 
         private static void RemoveTaskById(string id)
@@ -82,9 +81,7 @@ namespace QnStorageClient.Services
             lock (FileTransferTask)
             {
                 if (FileTransferTask.ContainsKey(id))
-                {
                     FileTransferTask.Remove(id);
-                }
             }
         }
 

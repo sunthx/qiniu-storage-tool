@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using QnStorageClient.Models;
 using QnStorageClient.Services;
 
@@ -16,28 +10,42 @@ namespace QnStorageClient.ViewModels
     {
         public FileTransferPageViewModel()
         {
-            Messenger.Default.Register<NotificationMessage<FileObject>>(this,AddTaskMessageAction);
             UploadTask = new ObservableCollection<FileTransferTask>();
             DownloadTask = new ObservableCollection<FileTransferTask>();
+
+            DeleteTaskCommand = new RelayCommand<FileTransferTask>(DeleteTaskCommandExecute);
+            SuspendTaskCommand = new RelayCommand<FileTransferTask>(SuspendTaskCommandExecute);
         }
 
-        private void AddTaskMessageAction(NotificationMessage<FileObject> message) 
+        public void Initialize()
         {
-            if (message.Notification == "upload")
+            var transferTasks = FileTransferService.GetAllTransferTask();
+            transferTasks.ForEach(item =>
             {
-                
-            }
-            else
-            {
-                var transferTask = FileTransferService.AddDownloadStack(message.Content);
-                DownloadTask.Add(transferTask);
-            }
+                if (item.TransferType == TransferType.Download)
+                {
+                    DownloadTask.Add(item);
+                }
+                else
+                {
+                    UploadTask.Add(item);
+                }
+            });
         }
 
         public ObservableCollection<FileTransferTask> UploadTask { get; set; }
-
         public ObservableCollection<FileTransferTask> DownloadTask { set; get; }
-
         public RelayCommand<FileTransferTask> DeleteTaskCommand { get; set; }
+        public RelayCommand<FileTransferTask> SuspendTaskCommand { get; set; }
+
+        private void SuspendTaskCommandExecute(FileTransferTask fileTransferTasks)
+        {
+            
+        }
+
+        private void DeleteTaskCommandExecute(FileTransferTask fileTransferTask)
+        {
+
+        }
     }
 } 

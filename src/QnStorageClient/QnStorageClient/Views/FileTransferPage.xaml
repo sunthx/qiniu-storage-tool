@@ -26,7 +26,7 @@
 
         <Pivot Grid.Row="2">
             <PivotItem x:Uid="UploadTaskTitle">
-                
+                <ListView></ListView>
             </PivotItem>
             <PivotItem x:Uid="DownloadTaskTitle">
                 
