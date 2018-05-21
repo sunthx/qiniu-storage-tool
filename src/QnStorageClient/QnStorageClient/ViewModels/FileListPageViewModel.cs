@@ -144,6 +144,7 @@ namespace QnStorageClient.ViewModels
                     TransferState = TransferState.Idle
                 };
 
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace(fileObject.FileName, storageFile);
                 FileTransferService.AddTransferTask(fileTransferTask);
             }
         }

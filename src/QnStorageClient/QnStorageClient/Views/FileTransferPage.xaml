@@ -5,31 +5,80 @@
     xmlns:local="using:QnStorageClient.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:QnStorageClient.Models"
     mc:Ignorable="d">
     <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            
-        </StackPanel>
-        
+        <StackPanel />
+
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock 
+            <TextBlock
                 x:Uid="FileTransferPageTitle"
                 VerticalAlignment="Center"
-                Style="{ThemeResource TitleTextBlockStyle}"/>
+                Style="{ThemeResource TitleTextBlockStyle}" />
         </StackPanel>
 
         <Pivot Grid.Row="2">
             <PivotItem x:Uid="UploadTaskTitle">
-                <ListView></ListView>
+                <ListView 
+                    ItemContainerStyle="{StaticResource DisplayListViewItem}"
+                    ItemsSource="{Binding UploadTask}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:FileTransferTask">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+                                    VerticalAlignment="Center"
+                                    Text="{Binding FileObject.FileName}" />
+
+                                <Grid Grid.Column="1">
+                                      <Grid.ColumnDefinitions>
+                                          <ColumnDefinition/>
+                                          <ColumnDefinition Width="80"/>
+                                      </Grid.ColumnDefinitions>
+                                    <ProgressBar
+                                        Name="UploadProgress"
+                                        VerticalAlignment="Center"
+                                        Minimum="0"
+                                        Maximum="1"
+                                        Height="15"
+                                        Value="{Binding Progress,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    
+                                    <TextBlock
+                                        Text="{Binding Value,ElementName=UploadProgress,Converter={StaticResource StringFormatConverter},ConverterParameter=' {0:P}'}" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="1"/>
+                                </Grid>
+
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Grid.Column="2" 
+                                    Orientation="Horizontal">
+                                    <Button 
+                                        Style="{ThemeResource TextBlockButtonStyle}" 
+                                        x:Uid="UploadFileListViewItemPause"/>
+                                    <Button 
+                                        Style="{ThemeResource TextBlockButtonStyle}" 
+                                        x:Uid="UploadFileListViewItemDelete"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </PivotItem>
             <PivotItem x:Uid="DownloadTaskTitle">
-                
+                <ListView ItemsSource="{Binding DownloadTask}" />
             </PivotItem>
         </Pivot>
     </Grid>

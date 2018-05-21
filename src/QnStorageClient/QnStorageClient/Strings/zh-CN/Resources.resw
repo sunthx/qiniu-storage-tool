@@ -336,4 +336,12 @@
     <value>上传任务</value>
     <comment>文件传输界面</comment>
   </data>
+  <data name="UploadFileListViewItemDelete.Content" xml:space="preserve">
+    <value>删除</value>
+    <comment>上传任务：删除</comment>
+  </data>
+  <data name="UploadFileListViewItemPause.Content" xml:space="preserve">
+    <value>暂停</value>
+    <comment>上传任务：暂停</comment>
+  </data>
 </root>

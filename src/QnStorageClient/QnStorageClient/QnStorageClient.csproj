@@ -98,6 +98,7 @@
     <Compile Include="Converters\EmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\FileMetaDataConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -202,6 +203,10 @@
     <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Share\Qiniu.Share.csproj">
       <Project>{33c61c28-409d-44f4-8d5e-561144ae2428}</Project>
       <Name>Qiniu.Share</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj">
+      <Project>{1008c8b0-dbf8-4f5b-9acc-f1c9538a04d9}</Project>
+      <Name>Qiniu.Uwp.FileStorage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

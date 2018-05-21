@@ -36,11 +36,11 @@ namespace QnStorageClient.Models
         /// </summary>
         public TransferState TransferState { get; set; }
 
-        private double? _progress;
+        private double _progress;
         /// <summary>
         /// 进度
         /// </summary>
-        public double? Progress
+        public double Progress
         {
             set => Set(ref _progress, value);
             get => _progress;

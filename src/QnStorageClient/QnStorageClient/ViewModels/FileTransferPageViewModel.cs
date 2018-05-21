@@ -40,12 +40,12 @@ namespace QnStorageClient.ViewModels
 
         private void SuspendTaskCommandExecute(FileTransferTask fileTransferTasks)
         {
-            
+            fileTransferTasks.TransferState = TransferState.Suspended;
         }
 
         private void DeleteTaskCommandExecute(FileTransferTask fileTransferTask)
         {
-
+            fileTransferTask.TransferState = TransferState.Aborted;
         }
     }
 } 

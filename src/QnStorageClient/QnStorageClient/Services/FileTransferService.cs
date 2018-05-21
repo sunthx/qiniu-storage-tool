@@ -9,6 +9,7 @@ namespace QnStorageClient.Services
 {
     public static class FileTransferService
     {
+        private static readonly List<FileTransferTask> AllFileTransferTask = new List<FileTransferTask>();
         private static readonly Queue<FileTransferTask> AllTask = new Queue<FileTransferTask>();
         private static readonly int _maxTaskCount = 10;
         private static readonly Dictionary<string, Task> FileTransferTask = new Dictionary<string, Task>();
@@ -20,7 +21,7 @@ namespace QnStorageClient.Services
         {
             lock (LockObject)
             {
-                return AllTask.ToList();
+                return AllFileTransferTask;
             }
         }
 
@@ -28,6 +29,7 @@ namespace QnStorageClient.Services
         {
             lock (LockObject)
             {
+                AllFileTransferTask.Add(task);
                 AllTask.Enqueue(task);
             }
 

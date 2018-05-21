@@ -15,16 +15,6 @@
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-
-        <Style TargetType="ListViewItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
 
     <Grid Padding="10 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -118,6 +108,7 @@
             x:Name="FileListView"
             extensions:ScrollViewerEx.VerticalScrollBarMargin="0 40 0 0"
             ItemsSource="{Binding FileItems,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+            ItemContainerStyle="{StaticResource DisplayListViewItem}"
             Grid.Row="2">
             <ListView.Header>
                 <controls:ScrollHeader Mode="Sticky">
