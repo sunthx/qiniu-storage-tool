@@ -324,7 +324,7 @@
   <data name="LoadBucketInfo" xml:space="preserve">
     <value>正在获取当前存储空间信息...</value>
   </data>
-  <data name="DownloadTaskTitle.Header" xml:space="preserve">
+  <data name="DownloadTaskTitle.Content" xml:space="preserve">
     <value>下载任务</value>
     <comment>文件传输界面</comment>
   </data>
@@ -332,7 +332,7 @@
     <value>文件传输</value>
     <comment>文件传输界面</comment>
   </data>
-  <data name="UploadTaskTitle.Header" xml:space="preserve">
+  <data name="UploadTaskTitle.Content" xml:space="preserve">
     <value>上传任务</value>
     <comment>文件传输界面</comment>
   </data>
@@ -343,5 +343,11 @@
   <data name="UploadFileListViewItemPause.Content" xml:space="preserve">
     <value>暂停</value>
     <comment>上传任务：暂停</comment>
+  </data>
+  <data name="TransferPageDeleteTask.Text" xml:space="preserve">
+    <value>删除所有任务</value>
+  </data>
+  <data name="AllTaskTitle.Content" xml:space="preserve">
+    <value>全部任务</value>
   </data>
 </root>

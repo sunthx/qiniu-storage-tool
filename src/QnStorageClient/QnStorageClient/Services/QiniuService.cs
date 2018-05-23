@@ -82,10 +82,33 @@ namespace QnStorageClient.Services
             int limit = 100,
             string delimiter = null)
         {
+#if DEBUG
+            var result = new ListInfo
+            {
+                Items = new List<ListItem>()
+            };
+
+            for (int i = 0; i < 50; i++)
+            {
+                var newItem = new ListItem
+                {
+                    FileType = 0,
+                    Fsize = 1000000 + i,
+                    Key = i + ".png",
+                    MimeType = "image/png",
+                    PutTime = 1526952740
+                };
+
+                result.Items.Add(newItem);
+            }
+
+            return result;
+#else
             var bucketManager = new BucketManager(_currentMac, _config);
             var queryResult = await Task.Factory.StartNew(() =>
-                bucketManager.ListFiles(bucketName, prefix, marker, limit, delimiter));
+            bucketManager.ListFiles(bucketName, prefix, marker, limit, delimiter));
             return queryResult.Result;
+#endif
         }
 
         public static async Task<bool> CreateBucket(BucketObject bucketObject)
@@ -186,7 +209,7 @@ namespace QnStorageClient.Services
                 for (int i = 0; i < 100; i++)
                 {
                     ProgressHandler(i,total);
-                    await Task.Delay(1000);
+                    await Task.Delay(2000);
                 }
 
                 return true;

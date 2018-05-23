@@ -14,72 +14,116 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel />
+        <StackPanel VerticalAlignment="Center">
+            <Button Command="{Binding DeleteFileCommand}" Margin="10 0 0 0"
+                    Style="{ThemeResource TextBlockButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE74D;" />
+                    <TextBlock x:Uid="TransferPageDeleteTask" Margin="10 0 0 0" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
             <TextBlock
                 x:Uid="FileTransferPageTitle"
                 VerticalAlignment="Center"
                 Style="{ThemeResource TitleTextBlockStyle}" />
-        </StackPanel>
 
-        <Pivot Grid.Row="2">
-            <PivotItem x:Uid="UploadTaskTitle">
-                <ListView 
-                    ItemContainerStyle="{StaticResource DisplayListViewItem}"
-                    ItemsSource="{Binding UploadTask}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:FileTransferTask">
-                            <Grid>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource CustomRadioButton}">
+                        <Setter Property="Margin" Value="10 0 0 0" />
+                    </Style>
+                </StackPanel.Resources>
+                <RadioButton IsChecked="True" x:Uid="AllTaskTitle" />
+                <RadioButton x:Uid="UploadTaskTitle" />
+                <RadioButton x:Uid="DownloadTaskTitle" />
+            </StackPanel>
+        </Grid>
+
+        <ListView
+            Grid.Row="2"
+            ItemContainerStyle="{StaticResource DisplayListViewItem}"
+            ItemsSource="{Binding AllTasks}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:FileTransferTask">
+                    <Grid Margin="5" ColumnSpacing="10" BorderThickness="1" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                            <FontIcon
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                FontSize="30"
+                                Foreground="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
+                                FontFamily="Segoe MDL2 Assets" 
+                                Glyph="&#xE898;" />
+                        </Border>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{Binding FileObject.FileName}" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                FontStyle="Italic"
+                                Visibility="{Binding FileObject.PublicUrl,Converter={StaticResource EmptyToVisibilityConverter}}"
+                                Text="{Binding FileObject.PublicUrl}" />
+
+                            <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="5*"/>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock 
+                                <ProgressBar
+                                    Name="UploadProgress"
                                     VerticalAlignment="Center"
-                                    Text="{Binding FileObject.FileName}" />
+                                    Minimum="0"
+                                    Maximum="1"
+                                    Height="10"
+                                    Value="{Binding Progress,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
-                                <Grid Grid.Column="1">
-                                      <Grid.ColumnDefinitions>
-                                          <ColumnDefinition/>
-                                          <ColumnDefinition Width="80"/>
-                                      </Grid.ColumnDefinitions>
-                                    <ProgressBar
-                                        Name="UploadProgress"
-                                        VerticalAlignment="Center"
-                                        Minimum="0"
-                                        Maximum="1"
-                                        Height="15"
-                                        Value="{Binding Progress,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    
-                                    <TextBlock
-                                        Text="{Binding Value,ElementName=UploadProgress,Converter={StaticResource StringFormatConverter},ConverterParameter=' {0:P}'}" 
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Grid.Column="1"/>
-                                </Grid>
-
-                                <StackPanel
+                                <TextBlock
+                                    Text="{Binding Value,ElementName=UploadProgress,Converter={StaticResource StringFormatConverter},ConverterParameter=' {0:P}'}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Grid.Column="2" 
-                                    Orientation="Horizontal">
-                                    <Button 
-                                        Style="{ThemeResource TextBlockButtonStyle}" 
-                                        x:Uid="UploadFileListViewItemPause"/>
-                                    <Button 
-                                        Style="{ThemeResource TextBlockButtonStyle}" 
-                                        x:Uid="UploadFileListViewItemDelete"/>
-                                </StackPanel>
+                                    Grid.Column="1" />
                             </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </PivotItem>
-            <PivotItem x:Uid="DownloadTaskTitle">
-                <ListView ItemsSource="{Binding DownloadTask}" />
-            </PivotItem>
-        </Pivot>
+
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Grid.Row="3"
+                                Orientation="Horizontal">
+                                <Button
+                                    Style="{ThemeResource TextBlockButtonStyle}"
+                                    x:Uid="UploadFileListViewItemPause" />
+                                <Button
+                                    Style="{ThemeResource TextBlockButtonStyle}"
+                                    x:Uid="UploadFileListViewItemDelete" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

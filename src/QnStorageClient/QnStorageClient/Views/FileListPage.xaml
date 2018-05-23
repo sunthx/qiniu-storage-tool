@@ -10,7 +10,6 @@
     xmlns:viewModels="using:QnStorageClient.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
         <converters:FileMetaDataConverter x:Key="FileMetaDataConverter"/>
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>

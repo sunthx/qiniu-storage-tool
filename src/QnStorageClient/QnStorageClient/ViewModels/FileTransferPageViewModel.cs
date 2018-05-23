@@ -10,9 +10,7 @@ namespace QnStorageClient.ViewModels
     {
         public FileTransferPageViewModel()
         {
-            UploadTask = new ObservableCollection<FileTransferTask>();
-            DownloadTask = new ObservableCollection<FileTransferTask>();
-
+            AllTasks = new ObservableCollection<FileTransferTask>();
             DeleteTaskCommand = new RelayCommand<FileTransferTask>(DeleteTaskCommandExecute);
             SuspendTaskCommand = new RelayCommand<FileTransferTask>(SuspendTaskCommandExecute);
         }
@@ -22,18 +20,11 @@ namespace QnStorageClient.ViewModels
             var transferTasks = FileTransferService.GetAllTransferTask();
             transferTasks.ForEach(item =>
             {
-                if (item.TransferType == TransferType.Download)
-                {
-                    DownloadTask.Add(item);
-                }
-                else
-                {
-                    UploadTask.Add(item);
-                }
+                AllTasks.Add(item);
             });
         }
 
-        public ObservableCollection<FileTransferTask> UploadTask { get; set; }
+        public ObservableCollection<FileTransferTask> AllTasks { get; set; }
         public ObservableCollection<FileTransferTask> DownloadTask { set; get; }
         public RelayCommand<FileTransferTask> DeleteTaskCommand { get; set; }
         public RelayCommand<FileTransferTask> SuspendTaskCommand { get; set; }
