@@ -108,7 +108,7 @@ namespace QnStorageClient.ViewModels
         private void DownloadFileCommandExecute(FileItemViewModel item)
         {
             var resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
-            item.FileObject.PublicUrl = resouceUrl;
+            item.FileObject.PublicUrl =$"http://{resouceUrl}";
 
             var fileTransferTask = new FileTransferTask(item.FileObject)
             {

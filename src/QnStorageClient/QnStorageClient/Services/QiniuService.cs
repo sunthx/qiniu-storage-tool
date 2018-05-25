@@ -32,7 +32,7 @@ namespace QnStorageClient.Services
         {
             return await Task.Factory.StartNew(() =>
             {
-#if DEBUG
+#if MOCK
                 return new Zone {ApiHost = Zone.ZONE_AS_Singapore.ApiHost};
 #else
                 return ZoneHelper.QueryZone(_currentMac.AccessKey, bucketName);
@@ -42,7 +42,7 @@ namespace QnStorageClient.Services
 
         public static async Task<List<string>> GetBuckets(bool isShare = true)
         {
-#if DEBUG
+#if MOCK
             return new List<string>
             {
                 "Bucket1",
@@ -66,7 +66,7 @@ namespace QnStorageClient.Services
 
         public static async Task<bool> DeleteFile(string bucketName, string fileId)
         {
-#if DEBUG
+#if MOCK
             return await Task.FromResult(true);
 #else
             var bucketManager = new BucketManager(_currentMac, _config);
@@ -82,7 +82,7 @@ namespace QnStorageClient.Services
             int limit = 100,
             string delimiter = null)
         {
-#if DEBUG
+#if MOCK
             var result = new ListInfo
             {
                 Items = new List<ListItem>()
@@ -113,7 +113,7 @@ namespace QnStorageClient.Services
 
         public static async Task<bool> CreateBucket(BucketObject bucketObject)
         {
-#if DEBUG
+#if MOCK
             return await Task.FromResult(true);
 #else
             var bucketManager = new BucketManager(_currentMac, _config);
@@ -125,7 +125,7 @@ namespace QnStorageClient.Services
 
         public static async Task<bool> SetBucketAccessControl(string bucketName, bool isPrivate)
         {
-#if DEBUG
+#if MOCK
             return await Task.FromResult(true);
 #else
             var bucketManager = new BucketManager(_currentMac, _config);
@@ -136,7 +136,7 @@ namespace QnStorageClient.Services
 
         public static async Task<List<string>> Domains(string bucketName)
         {
-#if DEBUG
+#if MOCK
             return await Task.FromResult(new List<string>
             {
                 "www.domain1.com",
@@ -154,7 +154,7 @@ namespace QnStorageClient.Services
 
         public static string CreateResourcePublicUrl(string domians, string resouceId)
         {
-#if DEBUG
+#if MOCK
             return "www.domain1.com";
 #else
             return DownloadManager.CreatePublishUrl(domians, resouceId);
@@ -163,13 +163,19 @@ namespace QnStorageClient.Services
 
         public static Task<bool> DownloadFile(FileTransferTask task)
         {
-#if DEBUG
+            IProgress<double> progress = new Progress<double>(percent =>
+            {
+                DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    task.Progress = percent;
+                });
+            });
+#if MOCK
             return Task.FromResult(true);
 #else
             return Task.Factory.StartNew(() =>
             {
-                var result = DownloadManager.Download(task.FileObject.PublicUrl,
-                    Path.Combine(AppSettingService.GetSetting().StoragePath, task.FileObject.FileName));
+                var result = DownloadManager.Download(task.FileObject.PublicUrl, progress);
 
                 return result.Code == 200;
             });
@@ -204,7 +210,7 @@ namespace QnStorageClient.Services
                     });
                 }
 
-#if DEBUG
+#if MOCK
                 int total = 100;
                 for (int i = 0; i < 100; i++)
                 {
@@ -256,7 +262,7 @@ namespace QnStorageClient.Services
 
         public static Task<bool> CheckRemoteDuplicate(string currentBucketName, string fileKey)
         {
-#if DEBUG
+#if MOCK
             return Task.FromResult(true);
 #else
             return Task.Factory.StartNew(() =>
