@@ -5,5 +5,6 @@
         public string Ak { get; set; }
         public string Sk { get; set; }
         public string StoragePath { get; set; }
+        public string StorageToken { get; set; }
     }
 }

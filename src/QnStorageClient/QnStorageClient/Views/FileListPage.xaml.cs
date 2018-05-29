@@ -32,7 +32,7 @@ namespace QnStorageClient.Views
                 DataContext = _fileListPageViewModel;
             }
 
-            await _fileListPageViewModel.LoadFiles(e.Parameter as BucketObject);
+            _fileListPageViewModel.LoadFiles(e.Parameter as BucketObject);
             base.OnNavigatedTo(e);
         }
 

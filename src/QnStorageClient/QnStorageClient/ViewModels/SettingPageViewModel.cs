@@ -59,9 +59,9 @@ namespace QnStorageClient.ViewModels
             var folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("StoragePath", folder);
-                StoragePath = folder.Path;
                 var setting = AppSettingService.GetSetting();
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace(setting.StorageToken, folder);
+                StoragePath = folder.Path;
                 setting.StoragePath = StoragePath;
                 AppSettingService.SaveSetting(setting);
             }

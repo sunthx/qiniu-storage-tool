@@ -1,4 +1,9 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Search;
+using Windows.System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using QnStorageClient.Services;
 using QnStorageClient.ViewModels;
@@ -20,6 +25,14 @@ namespace QnStorageClient.Views
             base.OnNavigatedTo(e);
 
             var setting = AppSettingService.GetSetting();
+
+            //初始化了存储的路径
+            if (!StorageApplicationPermissions.FutureAccessList.ContainsItem(setting.StorageToken))
+            {
+                setting.StoragePath = KnownFolders.PicturesLibrary.Path;
+            }
+
+            AppSettingService.SaveSetting(setting);
             var settingPageViewModel = new SettingPageViewModel
             {
                 Ak = setting.Ak,

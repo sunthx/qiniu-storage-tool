@@ -21,7 +21,7 @@ namespace QnStorageClient.ViewModels
         public FileListPageViewModel()
         {
             UploadFileCommand = new RelayCommand(async()=> await UploadFileCommandExecute());
-            RefreshFileListCommand = new RelayCommand(async () => await RefreshFileListCommandExecute());
+            RefreshFileListCommand = new RelayCommand(RefreshFileListCommandExecute);
             DeleteFileCommand = new RelayCommand<FileItemViewModel>(async (item) => await DeleteFileCommandExecute(item));
             DownloadFileCommand = new RelayCommand<FileItemViewModel>(DownloadFileCommandExecute);
             CopyFileLinkCommand = new RelayCommand<FileItemViewModel>(CopyFileLinkCommandExecute);
@@ -53,24 +53,24 @@ namespace QnStorageClient.ViewModels
 
         public RelayCommand<FileItemViewModel> DownloadFileCommand { get; set; }
 
-        public async Task LoadFiles(BucketObject bucketInfo)
+        public void LoadFiles(BucketObject bucketInfo)
         {
-            NotificationService.ShowMessage(ResourceUtils.GetText("LoadBucketInfo"));
-
-            CurrentBucketInfo = bucketInfo;
-            CurrentBucketInfo.RegionName = await GetZoneName(bucketInfo.Name);
-            CurrentBucketInfo.Domains = await QiniuService.Domains(bucketInfo.Name);
-            CurrentBucketInfo.CurrentUsingDomain = CurrentBucketInfo.Domains.FirstOrDefault();
             FileItems = new IncrementalLoadingCollection<FileListSource, FileItemViewModel>(new FileListSource(bucketInfo.Name));
 
-            FileItems.OnStartLoading += () =>
+            FileItems.OnStartLoading += async () =>
             {
                 NotificationService.ShowMessage(ResourceUtils.GetText("LoadFileList"));
+
+                if (CurrentBucketInfo == null || CurrentBucketInfo.Name != bucketInfo.Name)
+                {
+                    CurrentBucketInfo = bucketInfo;
+                    CurrentBucketInfo.RegionName = await GetZoneName(bucketInfo.Name);
+                    CurrentBucketInfo.Domains = await QiniuService.Domains(bucketInfo.Name);
+                    CurrentBucketInfo.CurrentUsingDomain = CurrentBucketInfo.Domains[0];
+                }
             };
 
             FileItems.OnEndLoading += NotificationService.Dismiss;
-
-            NotificationService.Dismiss();
         }
 
         private async Task<string> GetZoneName(string bucketName)
@@ -149,9 +149,9 @@ namespace QnStorageClient.ViewModels
             }
         }
 
-        private async Task RefreshFileListCommandExecute()
+        private void RefreshFileListCommandExecute()
         {
-            await LoadFiles(CurrentBucketInfo);
+            LoadFiles(CurrentBucketInfo);
         }
 
         private async Task DeleteFileCommandExecute(FileItemViewModel item)
