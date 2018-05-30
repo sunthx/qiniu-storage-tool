@@ -173,12 +173,22 @@ namespace QnStorageClient.Services
 #if MOCK
             return Task.FromResult(true);
 #else
-            return Task.Factory.StartNew(() =>
+            return Task.Factory.StartNew(async () =>
             {
                 var result = DownloadManager.Download(task.FileObject.PublicUrl, progress);
+                if (result.Code != 200)
+                    return false;
 
+                var folder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(AppSettingService.GetSetting()
+                    .StorageToken);
+
+                var newFile = await folder.CreateFileAsync(task.FileObject.FileName, CreationCollisionOption.ReplaceExisting);
+                using (var stream = await newFile.OpenStreamForWriteAsync())
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                        writer.Write(result.Data);
+               
                 return result.Code == 200;
-            });
+            }).Unwrap();
 #endif
         }
 

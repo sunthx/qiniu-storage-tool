@@ -95,7 +95,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  Grid.Column="2">
                 <TextBlock x:Uid="PublicLinkTitle"/>
                 <ComboBox
-                    SelectedValue="{Binding CurrentUsingDomain,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                    SelectedItem="{Binding CurrentUsingDomain,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                     ItemsSource="{Binding Domains,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     Width="250"/>
             </StackPanel>
