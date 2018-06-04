@@ -40,9 +40,10 @@
                         <Setter Property="Margin" Value="10 0 0 0" />
                     </Style>
                 </StackPanel.Resources>
-                <RadioButton IsChecked="True" x:Uid="AllTaskTitle" />
-                <RadioButton x:Uid="UploadTaskTitle" />
-                <RadioButton x:Uid="DownloadTaskTitle" />
+
+                <RadioButton IsChecked="True" x:Uid="AllTaskTitle" Command="{Binding FilterCommand}" />
+                <RadioButton x:Uid="UploadTaskTitle"  Command="{Binding FilterCommand}" CommandParameter="upload"/>
+                <RadioButton x:Uid="DownloadTaskTitle"  Command="{Binding FilterCommand}" CommandParameter="download"/>
             </StackPanel>
         </Grid>
 

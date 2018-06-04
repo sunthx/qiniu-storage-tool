@@ -107,15 +107,17 @@ namespace QnStorageClient.ViewModels
 
         private void DownloadFileCommandExecute(FileItemViewModel item)
         {
-            var resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
-            item.FileObject.PublicUrl =$"http://{resouceUrl}";
-
-            var fileTransferTask = new FileTransferTask(item.FileObject)
+            if (item == null)
             {
-                TransferType = TransferType.Download
-            };
-
-            FileTransferService.AddTransferTask(fileTransferTask);
+                foreach (var fileItemViewModel in GetCheckedItems())
+                {
+                    DownloadFile(fileItemViewModel);
+                }
+            }
+            else
+            {
+                DownloadFile(item);
+            }
         }
 
         private async Task UploadFileCommandExecute()
@@ -156,17 +158,25 @@ namespace QnStorageClient.ViewModels
 
         private async Task DeleteFileCommandExecute(FileItemViewModel item)
         {
+            bool result = false;
             NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleting"));
-            bool result = await QiniuService.DeleteFile(CurrentBucketInfo.Name, item.FileObject.FileName);
-            if (result)
+
+            if (item == null)
             {
-                FileItems.Remove(item);
-                NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleted"),2000);
+                foreach (var fileItemViewModel in GetCheckedItems())
+                {
+                    result = await DeleteFile(fileItemViewModel);
+                    if (!result)
+                        break;
+                }
             }
             else
             {
-                NotificationService.ShowMessage(ResourceUtils.GetText("FileDeleteFailed"),2000);
+                result = await DeleteFile(item);
             }
+
+            NotificationService.ShowMessage(
+                result ? ResourceUtils.GetText("FileDeleted") : ResourceUtils.GetText("FileDeleteFailed"), 2000);
         }
 
         private void CopyFileLinkCommandExecute(FileItemViewModel item)
@@ -179,6 +189,34 @@ namespace QnStorageClient.ViewModels
             Clipboard.SetContent(dataPackage);
 
             NotificationService.ShowMessage(ResourceUtils.GetText("FileLinkCopied"),2000);
+        }
+
+        private List<FileItemViewModel> GetCheckedItems()
+        {
+            return FileItems.Where(file => file.IsChecked).ToList();
+        }
+
+        private void DownloadFile(FileItemViewModel item)
+        {
+            var resouceUrl = QiniuService.CreateResourcePublicUrl(CurrentBucketInfo.CurrentUsingDomain, item.FileObject.FileName);
+            item.FileObject.PublicUrl = $"http://{resouceUrl}";
+
+            var fileTransferTask = new FileTransferTask(item.FileObject)
+            {
+                TransferType = TransferType.Download
+            };
+
+            FileTransferService.AddTransferTask(fileTransferTask);
+        }
+
+        private async Task<bool> DeleteFile(FileItemViewModel item)
+        {
+            bool result = await QiniuService.DeleteFile(CurrentBucketInfo.Name, item.FileObject.FileName);
+            if (result)
+            {
+                FileItems.Remove(item);
+            }
+            return result;
         }
     }
 }

@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnStorageClient", "QnStorageClient\QnStorageClient.csproj", "{F6183994-56B4-493D-A26A-C301DE0891A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qiniu.Share", "..\..\..\csharp-sdk\src\Qiniu.Share\Qiniu.Share.csproj", "{33C61C28-409D-44F4-8D5E-561144AE2428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qiniu.Share", "..\..\..\qiniu-csharp\src\Qiniu.Share\Qiniu.Share.csproj", "{8CB8026D-C35D-49D3-9223-DD6670917471}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qiniu.Uwp.FileStorage", "..\..\..\csharp-sdk\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj", "{1008C8B0-DBF8-4F5B-9ACC-F1C9538A04D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qiniu.Uwp.FileStorage", "..\..\..\qiniu-csharp\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj", "{1008C8B0-DBF8-4F5B-9ACC-F1C9538A04D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,22 +43,22 @@ Global
 		{F6183994-56B4-493D-A26A-C301DE0891A3}.Release|x86.ActiveCfg = Release|x86
 		{F6183994-56B4-493D-A26A-C301DE0891A3}.Release|x86.Build.0 = Release|x86
 		{F6183994-56B4-493D-A26A-C301DE0891A3}.Release|x86.Deploy.0 = Release|x86
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|ARM.Build.0 = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|x64.Build.0 = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Debug|x86.Build.0 = Debug|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|ARM.ActiveCfg = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|ARM.Build.0 = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|x64.ActiveCfg = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|x64.Build.0 = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|x86.ActiveCfg = Release|Any CPU
-		{33C61C28-409D-44F4-8D5E-561144AE2428}.Release|x86.Build.0 = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|x64.Build.0 = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Debug|x86.Build.0 = Debug|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|ARM.Build.0 = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|x64.ActiveCfg = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|x64.Build.0 = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|x86.ActiveCfg = Release|Any CPU
+		{8CB8026D-C35D-49D3-9223-DD6670917471}.Release|x86.Build.0 = Release|Any CPU
 		{1008C8B0-DBF8-4F5B-9ACC-F1C9538A04D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1008C8B0-DBF8-4F5B-9ACC-F1C9538A04D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1008C8B0-DBF8-4F5B-9ACC-F1C9538A04D9}.Debug|ARM.ActiveCfg = Debug|ARM

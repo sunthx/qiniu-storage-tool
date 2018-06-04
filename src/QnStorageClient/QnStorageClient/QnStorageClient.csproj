@@ -201,17 +201,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Share\Qiniu.Share.csproj">
-      <Project>{33c61c28-409d-44f4-8d5e-561144ae2428}</Project>
+    <Folder Include="Assets\FileIcons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\qiniu-csharp\src\Qiniu.Share\Qiniu.Share.csproj">
+      <Project>{8cb8026d-c35d-49d3-9223-dd6670917471}</Project>
       <Name>Qiniu.Share</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj">
+    <ProjectReference Include="..\..\..\..\qiniu-csharp\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj">
       <Project>{1008c8b0-dbf8-4f5b-9acc-f1c9538a04d9}</Project>
       <Name>Qiniu.Uwp.FileStorage</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\FileIcons\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

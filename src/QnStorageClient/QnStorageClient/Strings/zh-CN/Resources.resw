@@ -240,7 +240,7 @@
     <comment>设置界面.下载设置.存储路径</comment>
   </data>
   <data name="TxtTitle.Text" xml:space="preserve">
-    <value>QnStudio</value>
+    <value>七牛控制台</value>
     <comment>标题</comment>
   </data>
   <data name="UpdateButton.Content" xml:space="preserve">
@@ -349,5 +349,14 @@
   </data>
   <data name="AllTaskTitle.Content" xml:space="preserve">
     <value>全部任务</value>
+  </data>
+  <data name="BucketCreatedSucceed" xml:space="preserve">
+    <value>存储空间创建成功！</value>
+  </data>
+  <data name="BucketCreatedFailed" xml:space="preserve">
+    <value>存储空间创建失败！</value>
+  </data>
+  <data name="BucketCreating" xml:space="preserve">
+    <value>正在创建新的存储空间...</value>
   </data>
 </root>

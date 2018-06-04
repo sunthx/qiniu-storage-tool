@@ -13,6 +13,7 @@ namespace QnStorageClient.ViewModels
             AllTasks = new ObservableCollection<FileTransferTask>();
             DeleteTaskCommand = new RelayCommand<FileTransferTask>(DeleteTaskCommandExecute);
             SuspendTaskCommand = new RelayCommand<FileTransferTask>(SuspendTaskCommandExecute);
+            FilterCommand = new RelayCommand<string>(FilterCommandExecute);
         }
 
         public void Initialize()
@@ -24,8 +25,8 @@ namespace QnStorageClient.ViewModels
             });
         }
 
+        public RelayCommand<string> FilterCommand { set; get; }
         public ObservableCollection<FileTransferTask> AllTasks { get; set; }
-        public ObservableCollection<FileTransferTask> DownloadTask { set; get; }
         public RelayCommand<FileTransferTask> DeleteTaskCommand { get; set; }
         public RelayCommand<FileTransferTask> SuspendTaskCommand { get; set; }
 
@@ -37,6 +38,36 @@ namespace QnStorageClient.ViewModels
         private void DeleteTaskCommandExecute(FileTransferTask fileTransferTask)
         {
             fileTransferTask.TransferState = TransferState.Aborted;
+        }
+
+        private void FilterCommandExecute(string tag)
+        {
+            AllTasks.Clear();
+            var transferTasks = FileTransferService.GetAllTransferTask();
+
+            switch (tag)
+            {
+                case null:
+                    transferTasks.ForEach(item =>
+                    {
+                        AllTasks.Add(item);
+                    });
+                    break;
+                case "download":
+                    transferTasks.ForEach(item =>
+                    {
+                        if(item.TransferType == TransferType.Download)
+                            AllTasks.Add(item);
+                    });
+                    break;
+                case "upload":
+                    transferTasks.ForEach(item =>
+                    {
+                        if (item.TransferType == TransferType.Upload)
+                            AllTasks.Add(item);
+                    });
+                    break;
+            }
         }
     }
 } 

@@ -15,7 +15,7 @@ namespace QnStorageClient.Services
         public static void ShowMessage(string message,int duration = 0)
         {
             _inAppNotification.Show(message, duration);
-        }                            
+        }
 
         public static void Dismiss()
         {

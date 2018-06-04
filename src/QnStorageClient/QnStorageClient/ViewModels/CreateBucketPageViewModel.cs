@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using QnStorageClient.Models;
 using QnStorageClient.Services;
+using QnStorageClient.Utils;
 
 namespace QnStorageClient.ViewModels
 {
@@ -27,16 +28,18 @@ namespace QnStorageClient.ViewModels
 
         private async Task CreateCommandExecute()
         {
-            await QiniuService.CreateBucket(BucketObject);
-            await QiniuService.SetBucketAccessControl(BucketObject.Name, BucketObject.Private != "0");
+            NotificationService.ShowMessage(ResourceUtils.GetText("BucketCreating"));
+            var created = await QiniuService.CreateBucket(BucketObject) && await QiniuService.SetBucketAccessControl(BucketObject.Name, BucketObject.Private != "0");
+            NotificationService.Dismiss();
+
+            NotificationService.ShowMessage(
+                created ? ResourceUtils.GetText("BucketCreatedSucceed") : ResourceUtils.GetText("BucketCreatedFailed"),
+                2000);
         }
 
         private void CancelCommandExecute()
         {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService.GoBack();
         }
     }
 }
