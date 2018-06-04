@@ -359,4 +359,7 @@
   <data name="BucketCreating" xml:space="preserve">
     <value>正在创建新的存储空间...</value>
   </data>
+  <data name="GetAkSkLinkButton.Content" xml:space="preserve">
+    <value>如何获得 Access Key 与 Secret Key ？</value>
+  </data>
 </root>

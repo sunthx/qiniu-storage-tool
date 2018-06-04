@@ -47,6 +47,14 @@
             <TextBox Text="{Binding Ak,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
             <TextBox Text="{Binding Sk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
 
+            <HyperlinkButton 
+                Grid.Column="1"
+                Grid.Row="3"
+                x:Uid="GetAkSkLinkButton"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                NavigateUri="https://developer.qiniu.com/af/kb/1479/how-to-access-or-locate-the-access-key-and-secret-key"/>
+
             <Button
                 Command="{Binding UpdateAccountCommand}"
                 Grid.Column="1" 
