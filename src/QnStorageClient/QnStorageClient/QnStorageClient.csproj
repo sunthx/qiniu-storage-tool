@@ -204,11 +204,11 @@
     <Folder Include="Assets\FileIcons\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\qiniu-csharp\src\Qiniu.Share\Qiniu.Share.csproj">
-      <Project>{8cb8026d-c35d-49d3-9223-dd6670917471}</Project>
+    <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Share\Qiniu.Share.csproj">
+      <Project>{a2e6e34c-0ed7-4521-9065-6595d5f5e848}</Project>
       <Name>Qiniu.Share</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\qiniu-csharp\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj">
+    <ProjectReference Include="..\..\..\..\csharp-sdk\src\Qiniu.Uwp.FileStorage\Qiniu.Uwp.FileStorage.csproj">
       <Project>{1008c8b0-dbf8-4f5b-9acc-f1c9538a04d9}</Project>
       <Name>Qiniu.Uwp.FileStorage</Name>
     </ProjectReference>
